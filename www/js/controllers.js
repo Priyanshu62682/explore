@@ -35,6 +35,19 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
+.controller('AnswerCtrl', function($scope, $state) {
+        $scope.onClickAnswer=function () {
+			 href="#/tab/account";
+	}
+	$scope.onClickDownvote=function () {
+			document.getElementById("demo").innerHTML = "Hello Dollyyyy."
+	}
+})
+
+.controller('AnswerViewCtrl', function($scope) {
+
+})
+
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
