@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<body>
+<ion-view view-title="Answer" name="Answer-view">
+  <ion-content class="padding">
+   <ul>    
+    <li ng-repeat="x in Questions">
+    <div class="card list" >
+   	<div class="item item-divider">
+   		   <h2 >{{x.UserName }}</h2>
+		   <p >{{ x.Date}}</p>
+ 	  </div>
+   
+  	 <div class="item item-text-wrap">
+ 	     <p id="demo"  >{{ x.Question }}</p>
+  	 </div>
+         <div class="item tabs tabs-secondary tabs-icon-left">
+             <a class="tab-item">
+             <i class="icon ion-thumbsup"></i>
+                   Like
+             </a>
+             <a class="tab-item" on-tap = "onClickAnswer()" >
+             <i class="icon ion-chatbox"></i>
+                  Comment
+             </a>
+            <a class="tab-item" on-tap = "onClickDownvote()">
+            <i class="icon ion-thumbsdown"></i>
+                  Unlike
+            </a>
+        </div>
+  	
+    </div>
+    </li>
+
+   </ul>
+
+  </ion-content>
+</ion-view>
+</body>
+</html>
