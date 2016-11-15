@@ -18,18 +18,32 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {
 
+	$scope.votes = 0;
+	$scope.downvotes = 0;
+	$scope.upVote = function(s){
+		s.votes++;
+	}
+	$scope.downVote = function($event){
+		s.downvotes++;
+	}
 	$scope.self = [{
     username: "Heena Meena",
     questiondate: "26,December 2016" ,
-	questioncontent: "so much fucked up with this project"
+	questioncontent: "so much fucked up with this project",
+	votes: 0,
+	downvotes: 0
   }, {
     username: "Priyanshu",
     questiondate: "19,May 2016" ,
-	questioncontent: "I Hate this Boy"
+	questioncontent: "I Hate this Boy",
+	votes: 0,
+	downvotes: 0
   } ,{
     username: "Apoorva",
     questiondate: "8,January 2016" ,
-	questioncontent: "Work for the nation"
+	questioncontent: "Work for the nation",
+	votes: 0,
+	downvotes: 0
   }];
 
 

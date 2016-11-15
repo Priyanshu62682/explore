@@ -19,17 +19,17 @@
     </p-->
   </div>
   <div class="item tabs tabs-secondary tabs-icon-left">
-    <a class="tab-item" href="#">
-      <i class="icon ion-thumbsup"></i>
-      Like
+    <a class="tab-item" ng-click="upVote(s)" href="#">
+      <i class="icon ion-thumbsup" ></i>
+      Like {{votes}}
     </a>
     <a class="tab-item" href="#">
       <i class="icon ion-chatbox"></i>
       Comment
     </a>
-    <a class="tab-item" href="#">
+    <a class="tab-item" ng-click="downVote(s)"  href="#">
       <i class="icon ion-thumbsdown"></i>
-      Unlike
+      Unlike {{downvotes}}
     </a>
   </div>
 </div>
