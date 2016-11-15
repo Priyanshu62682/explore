@@ -84,9 +84,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     })
 
 .state('tab.AnswerView', {
-      url: '/AnswerView',
+      url:'/AnswerView',
       views: {
-        'tab-AnswerView': {
+        'tab-Answer': {
           templateUrl: 'templates/AnswerView.html',
           controller: 'AnswerViewCtrl'
         }
@@ -94,10 +94,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     })
 
   .state('tab.account', {
-    url: '/account',
+    url: '/acccount',
     views: {
       'tab-account': {
-        templateUrl: 'templates/tab-account.html',
+        templateUrl: 'templates/AnswerView.html',
         controller: 'AccountCtrl'
       }
     }
