@@ -1,4 +1,4 @@
-<ion-view view-title="Explore">
+<ion-view class="mystyle" view-title="explore">
   <ion-content class="padding">
    <div class="list card" ng-repeat="s in self">
 
@@ -19,15 +19,15 @@
     </p-->
   </div>
   <div class="item tabs tabs-secondary tabs-icon-left">
-    <a class="tab-item" ng-click="upVote(s)" href="#">
+    <a class="tab-item" class="iconstyle" ng-click="upVote(s)" href="#">
       <i class="icon ion-thumbsup" ></i>
       Like {{votes}}
     </a>
-    <a class="tab-item" href="#">
+    <a class="tab-item" class="iconstyle" href="#">
       <i class="icon ion-chatbox"></i>
       Comment
     </a>
-    <a class="tab-item" ng-click="downVote(s)"  href="#">
+    <a class="tab-item" class="iconstyle" ng-click="downVote(s)"  href="#">
       <i class="icon ion-thumbsdown"></i>
       Unlike {{downvotes}}
     </a>

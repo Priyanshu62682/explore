@@ -16,7 +16,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope,$http) {
 
 	$scope.votes = 0;
 	$scope.downvotes = 0;
@@ -26,6 +26,23 @@ angular.module('starter.controllers', [])
 	$scope.downVote = function($event){
 		s.downvotes++;
 	}
+
+	var req = {
+	    method: 'GET',
+	    url: 'http://localhost:8000/questions/',
+	    headers: {
+	    'Content-Type': 'application/json'
+	    },
+
+	}
+    $http(req).then(function (response) {
+        $scope.self=response.data;
+        console.log(JSON.stringify($scope.self));
+    });
+
+
+
+
 	$scope.self = [{
     username: "Heena Meena",
     questiondate: "26,December 2016" ,
