@@ -67,14 +67,15 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AnswerCtrl', function($scope, $state) {
+.controller('AnswerCtrl', function($scope, $state, $http) {
 		
 	var QuestionTemplate= {  
 	UserName:"Apoorva",
 	Date:"19 July 2016",
 	Question:"Do you believe in murphy's law?",
 	UpVote:"7",
-	DownVote:"9" };		
+	DownVote:"9",
+	QuestionId:"99" };		
 	
 	$scope.Questions=[ QuestionTemplate ];
 	QuestionTemplate= {
@@ -82,51 +83,70 @@ angular.module('starter.controllers', [])
 	Date:"9 Jan 2016",
 	Question:"Why did Hillary Lose?",
 	UpVote:"71",
-	DownVote:"5"
+	DownVote:"5",
+	QuestionId:"88"
 	};
 	$scope.Questions[1]=QuestionTemplate;
-
-	/*$scope.Questions=[
-	{  
-	UserName:"Apoorva",
-	Date:"19 July 2016",
-	Question:"Do you believe in murphy's law?",
-	UpVote:"7",
-	DownVote:"9" }	,
-	{
-	UserName:"Priyanshu",
-	Date:"9 Jan 2016",
-	Question:"Why did Hillary Lose?",
-	UpVote:"71",
-	DownVote:"5"
+	//$scope.Questions[1].UpVote=99;
+	//var UpVotes=0;
+	$scope.onClickUpVote=function () {
+			alert("kk");
+			 $scope.Questions[0].UpVote=88;
 	}
-	];*/
-	
         $scope.onClickAnswer=function () {
 			 $state.go('tab.AnswerView');
 	}
-	$scope.onClickDownvote=function () {
-			document.getElementById("demo").innerHTML = "Hello Dollyyyy."
+	//var DownVotes=0;
+	$scope.onClickDownVote=function () {
+			 $scope.Questions[0].DownVote=DownVote+1;
 	}
+/*
+	$http.get(" http://www.w3schools.com/angular/customers.php").then(function(response) {
+        	$scope.myData = response.data.records;
+   	 });	
 	
+/*	$scope.onClickAnswer=function () {
+		 $http.get("customers.php").then(function(response) {
+        	$scope.myData = response.data.records;
+   	 });	
+	}
+		
+*/	
 })
 
-.controller('AnswerViewCtrl', function($scope,$ionicPopup) {
-	$scope.onClickAnswerTheQuestion=function() {
-			// When button is clicked, the popup will be shown...
-
-     var promptPopup = $ionicPopup.prompt({
-         title: 'Your Answer',
-	 cssClass: 'my-custom-popup',
-         template: 'Template text',
-         inputType: 'text',
-         inputPlaceholder: 'Placeholder'
-      });
-        
-      promptPopup.then(function(res) {
-         console.log(res);
-      });   
-   };
+.controller('AnswerViewCtrl', function($scope,$ionicPopup,$state) {
+	
+	$scope.UserName="Apoorva",
+	$scope.Date="19 July 2016",
+	$scope.Question="Do you believe in murphy's law?",
+	$scope.UpVote="7",
+	$scope.DownVote="9"	
+	
+	
+ 	$scope.onClickReturn=function () {
+			 $state.go('tab.Answer');
+	}
+	 $scope.onClickSave=function () {
+			var AnswerText = document.getElementById("TextArea").value;
+			$scope.Ans=AnswerText;
+	}
+	$scope.NoOfAnswers="99";
+	var AnswerTemplate= {  
+	UserName:"Apoorva",
+	Date:"19 July 2016",
+	Answer:"I believe that anything that can go wrong, will go wrong.",
+	UpVote:"7",
+	DownVote:"9" };		
+	
+	$scope.Answers=[ AnswerTemplate ];
+	AnswerTemplate= {
+	UserName:"Priyanshu",
+	Date:"9 Jan 2016",
+	Answer:"She wasn't the ray of hope those stupid people needed her to be.",
+	UpVote:"71",
+	DownVote:"5"
+	};
+	$scope.Answers[1]=AnswerTemplate;
 	
 })
 

@@ -2,6 +2,7 @@
 <body>
 <ion-view view-title="Answer" name="Answer-view">
   <ion-content class="padding">
+	
    <ul>    
     <li ng-repeat="x in Questions">
     <div class="card list" >
@@ -14,17 +15,17 @@
  	     <p id="demo"  >{{ x.Question }}</p>
   	 </div>
          <div class="item tabs tabs-secondary tabs-icon-left">
-             <a class="tab-item">
+             <a class="tab-item" on-tap="onClickUpVote">
              <i class="icon ion-thumbsup"></i>
-                   Like
+                   upvote {{ x.UpVote}}
              </a>
              <a class="tab-item" on-tap = "onClickAnswer()" >
              <i class="icon ion-chatbox"></i>
-                  Comment
+                  answer
              </a>
-            <a class="tab-item" on-tap = "onClickDownvote()">
+            <a class="tab-item" on-tap = "onClickDownVote()">
             <i class="icon ion-thumbsdown"></i>
-                  Unlike
+                  downvote {{X.DownVote}}
             </a>
         </div>
   	
