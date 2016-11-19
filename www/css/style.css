@@ -4,8 +4,17 @@
 	color:red;
 	/*height: 200px;
         width: 50%;*/
+}
+.mystyle{
+	font-family: Comic Sans MS;
+	font-weight: normal;
+	font-size: 80px;
+}
 
-
+.iconstyle{
+	font-family: Lucida Console;
+	font-weight: normal;
+	font-size: 80px;
 }
 .background{
 	background-image: url("../img/ghar.png");
