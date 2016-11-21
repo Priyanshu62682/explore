@@ -27,26 +27,32 @@ angular.module('starter.controllers', [])
 		s.downvotes++;
 	}
 	$scope.gotoans = function(s){
-		$rootScope.usname = s.username;
+		$rootScope.usname = s.q_detail;
 		$state.go('tab.OneAns');
 	}
 	$scope.self = [{
-    username: "Heena Meena",
-    questiondate: "26,December 2016" ,
-	questioncontent: "so much fucked up with this project",
-	votes: 0,
+    id: 1,
+    q_detail: "so much fucked up with this project",
+	status:0,
+	location:"roorkee",
+	asked_on:"2016-11-20",
+	upvotes: 0,
 	downvotes: 0
   }, {
-    username: "Priyanshu",
-    questiondate: "19,May 2016" ,
-	questioncontent: "I Hate this Boy",
-	votes: 0,
+    id: 2,
+    q_detail: "so with this project",
+	status:0,
+	location:"roorkee",
+	asked_on:"2016-11-20",
+	upvotes: 0,
 	downvotes: 0
   } ,{
-    username: "Apoorva",
-    questiondate: "8,January 2016" ,
-	questioncontent: "Work for the nation",
-	votes: 0,
+    id: 3,
+    q_detail: "so much this project",
+	status:0,
+	location:"Lucknow",
+	asked_on:"2016-11-20",
+	upvotes: 0,
 	downvotes: 0
   }];
 
@@ -71,38 +77,43 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AnswerCtrl', function($scope, $state, $http) {
+.controller('AnswerCtrl', function($scope, $state, $http,$rootScope) {
 		
 	var QuestionTemplate= {  
-	UserName:"Apoorva",
-	Date:"19 July 2016",
-	Question:"Do you believe in murphy's law?",
-	UpVote:"7",
-	DownVote:"9",
-	QuestionId:"99" };		
+	id:1,
+	ans_id:1,
+	answer_detail:"Rajma Chawal is the most famous food here.",
+	validity:1,
+	asked_on:"2016-11-20",
+	upvotes:0,
+	downvotes:0,
+	q_id:1
+	};		
 	
 	$scope.Questions=[ QuestionTemplate ];
 	QuestionTemplate= {
-	UserName:"Priyanshu",
-	Date:"9 Jan 2016",
-	Question:"Why did Hillary Lose?",
-	UpVote:"71",
-	DownVote:"5",
-	QuestionId:"88"
+	id:1,
+	ans_id:1,
+	answer_detail:"Rajma Chawal is the most famous food here.",
+	validity:1,
+	asked_on:"2016-11-20",
+	upvotes:0,
+	downvotes:0,
+	q_id:1
 	};
 	$scope.Questions[1]=QuestionTemplate;
 	//$scope.Questions[1].UpVote=99;
 	//var UpVotes=0;
-	$scope.onClickUpVote=function () {
-			alert("kk");
-			 $scope.Questions[0].UpVote=88;
+	$scope.onClickUpVote=function (x) {
+			x.upvotes++;
 	}
-        $scope.onClickAnswer=function () {
-			 $state.go('tab.AnswerView');
+        $scope.onClickAnswer=function (x) {
+			$rootScope.ansdet = x.answer_detail;
+			$state.go('tab.AnswerView');
 	}
 	//var DownVotes=0;
-	$scope.onClickDownVote=function () {
-			 $scope.Questions[0].DownVote=DownVote+1;
+	$scope.onClickDownVote=function (x) {
+			 x.downvotes++;
 	}
 /*
 	$http.get(" http://www.w3schools.com/angular/customers.php").then(function(response) {
@@ -118,16 +129,11 @@ angular.module('starter.controllers', [])
 */	
 })
 
-.controller('AnswerViewCtrl', function($scope,$ionicPopup,$state) {
-	
-	$scope.UserName="Apoorva",
-	$scope.Date="19 July 2016",
-	$scope.Question="Do you believe in murphy's law?",
-	$scope.UpVote="7",
-	$scope.DownVote="9"	
+.controller('AnswerViewCtrl', function($scope,$ionicPopup,$state,$rootScope) {
 	
 	
  	$scope.onClickReturn=function () {
+			
 			 $state.go('tab.Answer');
 	}
 	 $scope.onClickSave=function () {
@@ -136,19 +142,25 @@ angular.module('starter.controllers', [])
 	}
 	$scope.NoOfAnswers="99";
 	var AnswerTemplate= {  
-	UserName:"Apoorva",
-	Date:"19 July 2016",
-	Answer:"I believe that anything that can go wrong, will go wrong.",
-	UpVote:"7",
-	DownVote:"9" };		
+	id:1,
+	ans_id:1,
+	answer_detail:"Rajma Chawal is the most famous food here.",
+	validity:1,
+	asked_on:"2016-11-20",
+	upvotes:0,
+	downvotes:0,
+	q_id:1 };		
 	
 	$scope.Answers=[ AnswerTemplate ];
 	AnswerTemplate= {
-	UserName:"Priyanshu",
-	Date:"9 Jan 2016",
-	Answer:"She wasn't the ray of hope those stupid people needed her to be.",
-	UpVote:"71",
-	DownVote:"5"
+	id:1,
+	ans_id:1,
+	answer_detail:"Rajma Chawal is the most famous food here.",
+	validity:1,
+	asked_on:"2016-11-20",
+	upvotes:0,
+	downvotes:0,
+	q_id:1
 	};
 	$scope.Answers[1]=AnswerTemplate;
 	

@@ -4,14 +4,14 @@
     <div ng-click="gotoans(s)">
   <div class="item item-avatar" class="mystyle">
     <img src="../img/me.jpg">
-    <h2>{{s.username}}</h2>
-    <p>{{s.questiondate}}</p>
+    <h2>{{s.id}}</h2>
+    <p>{{s.asked_on}}</p>
   </div>
 
   <div class="item item-body" class="mystyle">
     <img class="full-image" src="../img/bg.jpg">
     <p>
-      {{s.questioncontent}}
+      {{s.q_detail}}
     </p>
     <!--p>
       <a href="#" class="subdued">1 Like</a>
@@ -22,7 +22,7 @@
   <div class="item tabs tabs-secondary tabs-icon-left">
     <a class="tab-item" class="iconstyle" ng-click="upVote(s)" href="#">
       <i class="icon ion-thumbsup" ></i>
-      Like {{s.votes}}
+      Like {{s.upvotes}}
     </a>
     <a class="tab-item" class="iconstyle" href="#">
       <i class="icon ion-chatbox"></i>

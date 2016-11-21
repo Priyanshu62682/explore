@@ -7,25 +7,25 @@
     <li ng-repeat="x in Questions">
     <div class="card list" >
    	<div class="item item-divider">
-   		   <h2 >{{x.UserName }}</h2>
-		   <p >{{ x.Date}}</p>
+   		   <h2 >{{x.id }}</h2>
+		   <p >{{ x.ans_id}}</p>
  	  </div>
    
   	 <div class="item item-text-wrap">
- 	     <p id="demo"  >{{ x.Question }}</p>
+ 	     <p id="demo"  >{{ x.answer_detail }}</p>
   	 </div>
          <div class="item tabs tabs-secondary tabs-icon-left">
-             <a class="tab-item" on-tap="onClickUpVote">
+             <a class="tab-item" on-tap="onClickUpVote(x)">
              <i class="icon ion-thumbsup"></i>
-                   upvote {{ x.UpVote}}
+                   upvote {{ x.upvotes}}
              </a>
-             <a class="tab-item" on-tap = "onClickAnswer()" >
+             <a class="tab-item" on-tap = "onClickAnswer(x)" >
              <i class="icon ion-chatbox"></i>
                   answer
              </a>
-            <a class="tab-item" on-tap = "onClickDownVote()">
+            <a class="tab-item" on-tap = "onClickDownVote(x)">
             <i class="icon ion-thumbsdown"></i>
-                  downvote {{X.DownVote}}
+                  downvote {{x.downvotes}}
             </a>
         </div>
   	
