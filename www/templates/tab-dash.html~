@@ -1,6 +1,7 @@
 <ion-view class="mystyle" view-title="Explore">
   <ion-content class="padding">
-   <div class="list card" ng-repeat="s in self" ng-click="gotoans(s)">
+   <div class="list card" ng-repeat="s in self" >
+    <div ng-click="gotoans(s)">
   <div class="item item-avatar" class="mystyle">
     <img src="../img/me.jpg">
     <h2>{{s.username}}</h2>
@@ -16,6 +17,7 @@
       <a href="#" class="subdued">1 Like</a>
       <a href="#" class="subdued">5 Comments</a>
     </p-->
+  </div>
   </div>
   <div class="item tabs tabs-secondary tabs-icon-left">
     <a class="tab-item" class="iconstyle" ng-click="upVote(s)" href="#">
