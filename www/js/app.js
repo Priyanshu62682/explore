@@ -50,6 +50,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+  .state('tab.OneAns', {
+    url: '/OneAns',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/OneAns.html',
+        controller: 'OneAnsCtrl'
+      }
+    }
+  })
   .state('tab.chats', {
       url: '/chats',
       views: {
