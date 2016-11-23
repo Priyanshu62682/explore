@@ -1,36 +1,67 @@
 
 <ion-view view-title="Answer" >
   <ion-content class="padding">
-      <div class="list list-inset">
-          <div class="card">
-
-             <div class="item item-avatar">
-               <img src="img/my-image.jpeg">
-               <h2>This is a question</h2>
-             </div>
-
-             <div class="item item-body">
-                <img class="full-image" src="img/my-image.jpeg">
-                The question description goes here.
-             </div>
-		
-             <div class="item item-divider">
-		<button on-tap = "onClickAnswerTheQuestion()" class="button button-assertive">
-                answer this question
-                </button>		
-  	     </div>
-	     <div>
-		<p> 15 Answers</p>
-	     </div>
-	     <div class="card">
-		<div class="item item-body">
-			This is the first answer.
-		</div>
-	     </div>
-		
+      <div class="card list"  >
+   	<div class="item item-divider">
+   		   <h2 ng-bind="UserName">{{ }}</h2>
+		   <p ng-bind="Date">{{}}</p>
+ 	  </div>
+   
+  	 <div class="item item-text-wrap">
+ 	     <p ng-bind="Question"  >{{ }}</p>
+  	 </div>
 	
-          </div>
-      </div>
+	<textarea id="TextArea" cols="100" rows="10" my-maxlength="10" ></textarea>	
+
+         <div class="item tabs tabs-secondary tabs-icon-left">
+             <a class="tab-item" on-tap = "onClickSave()">
+             <i class="icon ion-thumbsup" ></i>
+                   Answer
+             </a>
+             <a class="tab-item" on-tap = "onClickDraft()" >
+             <i class="icon ion-chatbox"></i>
+                  Save As Draft
+             </a>
+            <a class="tab-item" on-tap = "onClickReturn()">
+            <i class="icon ion-thumbsdown"></i>
+                  Cancel
+            </a>
+        </div>
+  	<div>
+	<p ng-bind="Ans"></p>
+	</div>
+    </div>
+	<div>
+	<div class="item item-divider">
+   		   <h2 > Other Answers Available</h2>
+	</div>
+
+<ul>    
+    <li ng-repeat="x in Answers">
+    <div class="card list" >
+   	<div class="item item-divider">
+   		   <h2 >{{x.UserName }}</h2>
+		   <p >{{ x.Date}}</p>
+ 	  </div>
+   
+  	 <div class="item item-text-wrap">
+ 	     <p id="demo"  >{{ x.Answer }}</p>
+  	 </div>
+         <div class="item tabs tabs-secondary tabs-icon-left">
+             <a class="tab-item">
+             <i class="icon ion-thumbsup" on-tap = "onClickUpvote()"></i>
+                   upvote
+             </a>
+            <a class="tab-item" on-tap = "onClickDownvote()">
+            <i class="icon ion-thumbsdown"></i>
+                  downvote
+            </a>
+        </div>
+  	
+    </div>
+    </li>
+
+   </ul>
   </ion-content>
 </ion-view>
 
