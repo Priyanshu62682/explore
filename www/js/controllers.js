@@ -16,7 +16,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('DashCtrl', function($scope,$state,$rootScope) {
+.controller('DashCtrl', function($scope,$http,$state,$rootScope) {
 
 	$scope.votes = 0;
 	$scope.downvotes = 0;
@@ -55,6 +55,20 @@ angular.module('starter.controllers', [])
 	upvotes: 0,
 	downvotes: 0
   }];
+  	//http request
+  	var user=2;
+  	var req = {
+            method: 'GET',
+            url: 'http://172.26.40.219/answers/user/',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+ 
+        }
+        $http(req).then(function (response) {
+                $scope.self=response.data;
+                console.log($scope.routedata);
+        });
 
 
 })
