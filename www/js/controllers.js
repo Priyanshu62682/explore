@@ -16,10 +16,21 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('DashCtrl', function($scope,$state,$rootScope) {
 
+
+.controller('DashCtrl', function($scope,$state) {
+
+	$scope.valuefront = true;
+	$scope.value = false;
 	$scope.votes = 0;
 	$scope.downvotes = 0;
+	$state.reguser = function(){
+		 $scope.$apply(function(){
+            $scope.valuefront = false;
+			$scope.value = true;
+        });
+		$state.go('tab.OneAns');
+	}
 	$scope.upVote = function(s){
 		s.votes++;
 	}
@@ -170,10 +181,10 @@ angular.module('starter.controllers', [])
 	
 	
 })
+
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };
-
 
 });
