@@ -15,6 +15,23 @@
         }
     })
 
+	.controller('TabCtrl' , function($scope,$http,$rootScope){
+	
+		var userid=8;
+		$scope.answerlist_expert=function(){
+			var req = {
+				method: 'POST',
+				url: 'http://172.20.18.158/answer_feed/'+userid+'/',
+				headers: {
+				'Content-Type': 'application/json'
+				},
+			}
+		
+			$http(req).then(function (response) {
+					$rootScope.question_list = response.data;
+			});
+		}
+	})
 
     .controller('DashCtrl', function($scope,$state,$http) {
 
@@ -92,8 +109,8 @@
 
     .controller('AnswerCtrl', function($scope, $state, $http,$rootScope) {
 
-        var tobeaccessed;
-        $scope.Questions=tobeaccessed;
+
+        $scope.Questions = $rootScope.question_list;
         $scope.onClickUpVote=function (x) {
                 x.upvotes++;
         }
@@ -101,7 +118,7 @@
             $rootScope.ansdet = x.answer_detail;
             var req = {
             method: 'GET',
-            url: 'http://172.20.18.158/answerslist/x.id/',
+            url: 'http://172.20.18.158/answerslist/'+x.id+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
