@@ -108,6 +108,8 @@
 
             }
             $http(req).then(function (response) {
+            		var abc;
+            		
                     $rootScope.answerList=response.data;
                 //    console.log($scope.routedata);
             });
