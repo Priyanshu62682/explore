@@ -15,6 +15,23 @@
         }
     })
 
+	.controller('TabCtrl' , function($scope,$http,$rootScope){
+	
+		var userid=8;
+		$scope.answerlist_expert=function(){
+			var req = {
+				method: 'POST',
+				url: 'http://172.20.18.158/answer_feed/'+userid+'/',
+				headers: {
+				'Content-Type': 'application/json'
+				},
+			}
+		
+			$http(req).then(function (response) {
+					$rootScope.question_list = response.data;
+			});
+		}
+	})
 
     .controller('DashCtrl', function($scope,$state,$http) {
 
@@ -92,31 +109,7 @@
 
     .controller('AnswerCtrl', function($scope, $state, $http,$rootScope) {
 
-        var QuestionTemplate= {  
-        id:1,
-        ans_id:1,
-        answer_detail:"Rajma Chawal is the most famous food here.",
-        validity:1,
-        asked_on:"2016-11-20",
-        upvotes:0,
-        downvotes:0,
-        q_id:1
-        };		
-
-        $scope.Questions=[ QuestionTemplate ];
-        QuestionTemplate= {
-        id:1,
-        ans_id:1,
-        answer_detail:"Rajma Chawal is the most famous food here.",
-        validity:1,
-        asked_on:"2016-11-20",
-        upvotes:0,
-        downvotes:0,
-        q_id:1
-        };
-        $scope.Questions[1]=QuestionTemplate;
-        //$scope.Questions[1].UpVote=99;
-        //var UpVotes=0;
+        $scope.Questions = $rootScope.question_list;
         $scope.onClickUpVote=function (x) {
                 x.upvotes++;
         }
@@ -124,7 +117,7 @@
             $rootScope.ansdet = x.answer_detail;
             var req = {
             method: 'GET',
-            url: 'http://172.20.18.158/answerslist/x.id/',
+            url: 'http://172.20.18.158/answerslist/'+x.id+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
