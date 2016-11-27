@@ -1,6 +1,42 @@
-<ion-view class="mystyle" view-title="Explore">
+<ion-view view-title="Explore" class="background" >
   <ion-content class="padding">
+  <div ng-show = "valuefront">
+    <center><p style="font-size:20px">City Guide Application</p></center>
+	
+<div class="list">
+   <p> <br>Name </p> 
+   <label class="item item-input">
+   <input type="text" placeholder="Enter Name">
+   </label>
+<p> <br>Age </p> 
+   <label class="item item-input">
+   <input type="number" placeholder="Age">
+   </label>
+	<p><br> E-mail </p> 
+   <label class="item item-input">
+   <input type="text" placeholder="E-mail">
+   </label>
+<p> <br>Gender </p> 
+   <label class="item item-input">
+   <input type="text" placeholder="Gender">
+   </label>
+<p> <br>Area of Experties </p>
+   <label class="item item-input">
+   <input type="text" placeholder="Area of Experties">
+   </label>
+<p> <br>Areas of Interest </p> 
+   
 
+</div>
+<div>
+<center>
+<button class="button button-balanced" ng-click = "reguser()">
+	Register
+</button>
+</center>
+	</div>
+</div>
+	<div class="rndm" ng-show="value">
    <div class="list card" ng-repeat="s in self" >
     <div ng-click="gotoans(s)">
   <div class="item item-avatar" class="mystyle">
@@ -34,5 +70,14 @@
     </a>
   </div>
 </div>
+</div>
   </ion-content>
+  <ion-footer-bar align-title="left" class="bar-balanced" ng-show="value">
+	<label class="item-input-wrapper">
+      <input type="text" placeholder="Ask Question" style="width:100%;height:100%">
+    </label>
+    <button class="button button-small button-balanced">
+      Ask
+    </button>
+</ion-footer-bar>
 </ion-view>
