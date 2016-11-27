@@ -34,7 +34,7 @@
 	})
 
     .controller('DashCtrl', function($scope,$state,$http) {
-
+    	$scope.data={};
         $scope.value = true;
         $scope.votes = 0;
         $scope.downvotes = 0;
@@ -42,7 +42,7 @@
 		$scope.value = false;
 		var req = {
             method: 'POST',
-            url: 'http://172.20.18.158/register/'+$scope.data.username+'/',
+            url: 'http://172.20.18.158/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
             headers: {
             'Content-Type': 'application/json'
             },
@@ -75,17 +75,15 @@
         var user=2;
         var req = {
                 method: 'GET',
-                url: 'http://172.20.18.158/feed/3/',
+                url: 'http://172.20.18.158/feed/8/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
 
             }
             $http(req).then(function (response) {
-                    $scope.self=response.data;
-                //    console.log($scope.routedata);
-            });
-
+					$scope.self = response.data;
+			});
 
     })
     .controller('ChatsCtrl', function($scope, Chats) {
@@ -115,7 +113,7 @@
                 x.upvotes++;
         }
         $scope.onClickAnswer=function (x) {
-            $rootScope.ansdet = x.answer_detail;
+            $rootScope.question=x;
             var req = {
             method: 'GET',
             url: 'http://172.20.18.158/answerslist/'+x.id+'/',
@@ -125,7 +123,6 @@
 
             }
             $http(req).then(function (response) {
-            		var abc;
             		
                     $rootScope.answerList=response.data;
                 //    console.log($scope.routedata);
@@ -149,7 +146,7 @@
                 $scope.Ans=AnswerText;
         }	
         $scope.Answers = $rootScope.answerList;
-        $scope.Questions = $rootScope.x;
+        $scope.Questions = $rootScope.question;
 
     })
 
