@@ -73,31 +73,8 @@
 
     .controller('AnswerCtrl', function($scope, $state, $http,$rootScope) {
 
-        var QuestionTemplate= {  
-        id:1,
-        ans_id:1,
-        answer_detail:"Rajma Chawal is the most famous food here.",
-        validity:1,
-        asked_on:"2016-11-20",
-        upvotes:0,
-        downvotes:0,
-        q_id:1
-        };		
-
-        $scope.Questions=[ QuestionTemplate ];
-        QuestionTemplate= {
-        id:1,
-        ans_id:1,
-        answer_detail:"Rajma Chawal is the most famous food here.",
-        validity:1,
-        asked_on:"2016-11-20",
-        upvotes:0,
-        downvotes:0,
-        q_id:1
-        };
-        $scope.Questions[1]=QuestionTemplate;
-        //$scope.Questions[1].UpVote=99;
-        //var UpVotes=0;
+        var tobeaccessed;
+        $scope.Questions=tobeaccessed;
         $scope.onClickUpVote=function (x) {
                 x.upvotes++;
         }
