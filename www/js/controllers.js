@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
 .controller('AnswerCtrl', function($scope, $state, $http,$rootScope) {
 		
 	
-	$scope.Questions[1]=QuestionTemplate;
+//	$scope.Questions[1]=QuestionTemplate;
 	//$scope.Questions[1].UpVote=99;
 	//var UpVotes=0;
 	$scope.onClickUpVote=function (x) {
