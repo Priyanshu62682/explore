@@ -20,16 +20,12 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope,$state) {
 
-	$scope.valuefront = true;
-	$scope.value = false;
+	$scope.value = true;
+	
 	$scope.votes = 0;
 	$scope.downvotes = 0;
-	$state.reguser = function(){
-		 $scope.$apply(function(){
-            $scope.valuefront = false;
-			$scope.value = true;
-        });
-		$state.go('tab.OneAns');
+	$scope.reguser = function(){
+		 $scope.value = false;
 	}
 	$scope.upVote = function(s){
 		s.votes++;

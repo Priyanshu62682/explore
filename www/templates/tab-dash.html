@@ -1,6 +1,6 @@
 <ion-view view-title="Explore" class="background" >
   <ion-content class="padding">
-  <div ng-show = "valuefront">
+  <div ng-show = "value">
     <center><p style="font-size:20px">City Guide Application</p></center>
 	
 <div class="list">
@@ -36,7 +36,7 @@
 </center>
 	</div>
 </div>
-	<div class="rndm" ng-show="value">
+	<div class="rndm" ng-hide="value">
    <div class="list card" ng-repeat="s in self" >
     <div ng-click="gotoans(s)">
   <div class="item item-avatar" class="mystyle">
