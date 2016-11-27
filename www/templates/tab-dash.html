@@ -1,32 +1,31 @@
 <ion-view view-title="Explore" >
   <ion-content class="padding">
+
   <div class="background"  ng-show = "value">
     <center><p style="font-size:20px">City Guide Application</p></center>
-	
-    <div class="list">
-       <p> <br>Name </p> 
-       <label class="item item-input">
-       <input type="text" placeholder="Enter Name">
-       </label>
-    <p> <br>Age </p> 
-       <label class="item item-input">
-       <input type="number" placeholder="Age">
-       </label>
-        <p><br> E-mail </p> 
-       <label class="item item-input">
-       <input type="text" placeholder="E-mail">
-       </label>
-    <p> <br>Gender </p> 
-       <label class="item item-input">
-       <input type="text" placeholder="Gender">
-       </label>
-    <p> <br>Area of Experties </p>
-       <label class="item item-input">
-       <input type="text" placeholder="Area of Experties">
-       </label>
-    <p> <br>Areas of Interest </p> 
-
-
+<div class="list">
+   <p> <br>Name </p> 
+   <label class="item item-input">
+   <input type="text" placeholder="Enter Name" ng-model="data.username">
+   </label>
+<p> <br>Age </p> 
+   <label class="item item-input">
+   <input type="number" placeholder="Age">
+   </label>
+	<p><br> E-mail </p> 
+   <label class="item item-input">
+   <input type="text" placeholder="E-mail">
+   </label>
+<p> <br>Gender </p> 
+   <label class="item item-input">
+   <input type="text" placeholder="Gender">
+   </label>
+<p> <br>Area of Experties </p>
+   <label class="item item-input">
+   <input type="text" placeholder="Area of Experties" ng-model="data.usercity">
+   </label>
+<p> <br>Areas of Interest </p> 
+   
     </div>
     <div>
     <center>
@@ -37,14 +36,13 @@
         </div>
 </div>
 	<div class="rndm" ng-hide="value">
-     <div class="list card" ng-repeat="s in self" >
-      <div ng-click="gotoans(s)">
-    <div class="item item-avatar" class="mystyle">
-      <img src="img/me.jpg">
-      <h2>{{s.id}}</h2>
-      <p>{{s.asked_on}}</p>
-    </div>
-
+   <div class="list card" ng-repeat="s in self" >
+    <div ng-click="gotoans(s)">
+  <div class="item item-avatar" class="mystyle">
+    <img src="../img/me.jpg">
+    <h2>{{s.id}}</h2>
+    <p>{{s.asked_on}}</p>
+  </div>
     <div class="item item-body">
       <p>
         {{s.q_detail}}

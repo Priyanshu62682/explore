@@ -22,8 +22,27 @@
         $scope.votes = 0;
         $scope.downvotes = 0;
         $scope.reguser = function(){
-                $scope.value = false;
+		$scope.value = false;
+		var req = {
+            method: 'POST',
+            url: 'http://172.20.18.158/register/'+$scope.data.username+'/',
+            headers: {
+            'Content-Type': 'application/json'
+            },
         }
+		
+		$http(req).then(function (response) {
+                $scope.userdata=response.data;
+            //    console.log($scope.routedata);
+        });
+	/*	var req = {
+			method: 'GET',
+			url: 'http://172.26.40.219/feed/'+req+'/',
+			headers:{
+			'Content-Type' : 'application/json'
+			},
+		}*/
+	}
         $scope.upVote = function(s){
             s.upvotes++;
         }
@@ -126,3 +145,4 @@
       };
 
     });
+
