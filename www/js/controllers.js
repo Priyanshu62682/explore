@@ -18,18 +18,16 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('DashCtrl', function($scope,$state) {
+.controller('DashCtrl', function($scope,$state,$http) {
 
-	$scope.valuefront = true;
-	$scope.value = false;
+	$scope.value = true;
+	alert($scope.value);
 	$scope.votes = 0;
 	$scope.downvotes = 0;
-	$state.reguser = function(){
-		 $scope.$apply(function(){
-            $scope.valuefront = false;
-			$scope.value = true;
-        });
-		$state.go('tab.OneAns');
+	$scope.reguser = function(){
+			
+            $scope.value = false;
+            alert($scope.value);
 	}
 	$scope.upVote = function(s){
 		s.upvotes++;
@@ -41,31 +39,7 @@ angular.module('starter.controllers', [])
 		$rootScope.usname = s.q_detail;
 		$state.go('tab.OneAns');
 	}
-/*	$scope.self = [{
-    id: 1,
-    q_detail: "Where can i eat the best street food in Delhi?",
-	status:0,
-	location:"Delhi",
-	asked_on:"2016-11-20",
-	upvotes: 0,
-	downvotes: 0
-  }, {
-    id: 2,
-    q_detail: "What is the best place to hang out on weekend?",
-	status:0,
-	location:"roorkee",
-	asked_on:"2016-11-20",
-	upvotes: 0,
-	downvotes: 0
-  } ,{
-    id: 3,
-    q_detail: "Where can i find Cheap and good earphones?",
-	status:0,
-	location:"Lucknow",
-	asked_on:"2016-11-20",
-	upvotes: 0,
-	downvotes: 0
-  }];*/
+
   	//http request
   	var user=2;
   	var req = {
