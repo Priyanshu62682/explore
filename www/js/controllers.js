@@ -21,7 +21,7 @@ angular.module('starter.controllers', [])
 	$scope.votes = 0;
 	$scope.downvotes = 0;
 	$scope.upVote = function(s){
-		s.votes++;
+		s.upvotes++;
 	}
 	$scope.downVote = function(s){
 		s.downvotes++;
@@ -30,7 +30,7 @@ angular.module('starter.controllers', [])
 		$rootScope.usname = s.q_detail;
 		$state.go('tab.OneAns');
 	}
-	$scope.self = [{
+/*	$scope.self = [{
     id: 1,
     q_detail: "Where can i eat the best street food in Delhi?",
 	status:0,
@@ -54,12 +54,12 @@ angular.module('starter.controllers', [])
 	asked_on:"2016-11-20",
 	upvotes: 0,
 	downvotes: 0
-  }];
+  }];*/
   	//http request
   	var user=2;
   	var req = {
             method: 'GET',
-            url: 'http://172.26.40.219/answers/user/',
+            url: 'http://172.26.40.219/feed/1/',
             headers: {
             'Content-Type': 'application/json'
             },
@@ -67,7 +67,7 @@ angular.module('starter.controllers', [])
         }
         $http(req).then(function (response) {
                 $scope.self=response.data;
-                console.log($scope.routedata);
+            //    console.log($scope.routedata);
         });
 
 
