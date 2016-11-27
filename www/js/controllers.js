@@ -18,17 +18,37 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('DashCtrl', function($scope,$state) {
-
+.controller('DashCtrl', function($scope,$state,$http) {
+	$scope.userdata;
+	$scope.data = {};
 	$scope.value = true;
-	
 	$scope.votes = 0;
 	$scope.downvotes = 0;
 	$scope.reguser = function(){
-		 $scope.value = false;
+		$scope.value = false;
+		var req = {
+            method: 'POST',
+            url: 'http://172.20.18.158/register/'+$scope.data.username+'/',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+        }
+		
+		$http(req).then(function (response) {
+                $scope.userdata=response.data;
+            //    console.log($scope.routedata);
+        });
+	/*	var req = {
+			method: 'GET',
+			url: 'http://172.26.40.219/feed/'+req+'/',
+			headers:{
+			'Content-Type' : 'application/json'
+			},
+		}*/
 	}
+	
 	$scope.upVote = function(s){
-		s.votes++;
+		s.upvotes++;
 	}
 	$scope.downVote = function(s){
 		s.downvotes++;
@@ -37,31 +57,8 @@ angular.module('starter.controllers', [])
 		$rootScope.usname = s.q_detail;
 		$state.go('tab.OneAns');
 	}
-	$scope.self = [{
-    id: 1,
-    q_detail: "so much fucked up with this project",
-	status:0,
-	location:"roorkee",
-	asked_on:"2016-11-20",
-	upvotes: 0,
-	downvotes: 0
-  }, {
-    id: 2,
-    q_detail: "so with this project",
-	status:0,
-	location:"roorkee",
-	asked_on:"2016-11-20",
-	upvotes: 0,
-	downvotes: 0
-  } ,{
-    id: 3,
-    q_detail: "so much this project",
-	status:0,
-	location:"Lucknow",
-	asked_on:"2016-11-20",
-	upvotes: 0,
-	downvotes: 0
-  }];
+  	//http request
+  	
 
 
 })
@@ -86,28 +83,7 @@ angular.module('starter.controllers', [])
 
 .controller('AnswerCtrl', function($scope, $state, $http,$rootScope) {
 		
-	var QuestionTemplate= {  
-	id:1,
-	ans_id:1,
-	answer_detail:"Rajma Chawal is the most famous food here.",
-	validity:1,
-	asked_on:"2016-11-20",
-	upvotes:0,
-	downvotes:0,
-	q_id:1
-	};		
 	
-	$scope.Questions=[ QuestionTemplate ];
-	QuestionTemplate= {
-	id:1,
-	ans_id:1,
-	answer_detail:"Rajma Chawal is the most famous food here.",
-	validity:1,
-	asked_on:"2016-11-20",
-	upvotes:0,
-	downvotes:0,
-	q_id:1
-	};
 	$scope.Questions[1]=QuestionTemplate;
 	//$scope.Questions[1].UpVote=99;
 	//var UpVotes=0;
@@ -122,18 +98,19 @@ angular.module('starter.controllers', [])
 	$scope.onClickDownVote=function (x) {
 			 x.downvotes++;
 	}
-/*
-	$http.get(" http://www.w3schools.com/angular/customers.php").then(function(response) {
-        	$scope.myData = response.data.records;
-   	 });	
 	
-/*	$scope.onClickAnswer=function () {
-		 $http.get("customers.php").then(function(response) {
-        	$scope.myData = response.data.records;
-   	 });	
-	}
-		
-*/	
+	var req = {
+            method: 'GET',
+            url: 'http://172.26.40.219/answer/1/',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+ 
+        }
+        $http(req).then(function (response) {
+                $scope.self=response.data;
+            //    console.log($scope.routedata);
+        });
 })
 
 .controller('AnswerViewCtrl', function($scope,$ionicPopup,$state,$rootScope) {
