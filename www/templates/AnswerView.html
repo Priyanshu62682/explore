@@ -3,18 +3,20 @@
   <ion-content class="padding">
       <div class="card list"  >
    	<div class="item item-divider">
-   		   <h2>Username</h2>
-            <h4>Date</h4>
+   		   <h2>{{Questions.id}}</h2>
+            <h4>{{Questions.location}}</h4>
+            <h4>{{currDate}}</h4>
+            
  	  </div>
    
   	 <div class="item item-text-wrap">
- 	     <p   >{{Questions.q_details}}</p>
+ 	     <p   >{{Questions.q_detail}}</p>
   	 </div>
-	
-	<textarea id="TextArea" cols="100" rows="10" my-maxlength="10" ></textarea>	
-
+	   <div class="padding">
+	   <textarea id="TextArea" cols="100" rows="4" my-maxlength="10" placeholder="Write your answer here"></textarea>	
+     </div>
          <div class="item tabs tabs-secondary tabs-icon-left">
-             <a class="tab-item" on-tap = "onClickSave()">
+             <a class="tab-item" on-tap = "onClickAnswer(Questions)">
              <i class="icon ion-thumbsup" ></i>
                    Answer
              </a>
@@ -41,7 +43,7 @@
     <div class="card list" >
    	<div class="item item-divider">
    		   <h2 >{{x.answered_by }}</h2>
-		   <p >Date</p>
+		   <p >{{x.answered_on}}</p>
  	  </div>
    
   	 <div class="item item-text-wrap">

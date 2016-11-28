@@ -16,21 +16,8 @@
     })
 
 	.controller('TabCtrl' , function($scope,$http,$rootScope){
-	
-		var userid=8;
-		$scope.answerlist_expert=function(){
-			var req = {
-				method: 'POST',
-				url: 'http://172.20.18.158/answer_feed/'+userid+'/',
-				headers: {
-				'Content-Type': 'application/json'
-				},
-			}
+	       
 		
-			$http(req).then(function (response) {
-					$rootScope.question_list = response.data;
-			});
-		}
 	})
 
     .controller('DashCtrl', function($scope,$state,$http) {
@@ -42,7 +29,7 @@
 		$scope.value = false;
 		var req = {
             method: 'POST',
-            url: 'http://172.20.18.158/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
+            url: 'http://172.26.40.219/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
             headers: {
             'Content-Type': 'application/json'
             },
@@ -75,7 +62,7 @@
         var user=2;
         var req = {
                 method: 'GET',
-                url: 'http://172.20.18.158/feed/8/',
+                url: 'http://172.26.40.219/feed/8/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -107,16 +94,36 @@
 
     .controller('AnswerCtrl', function($scope, $state, $http,$rootScope) {
 
+        $scope.data={};
+        $scope.go=function(){
+            $state.go('tab.AnswerView');
+        }
+        var userid=8;
+        $scope.doRefresh=function(){
+            var req = {
+                method: 'GET',
+                url: 'http://172.26.40.219/answer_feed/'+userid+'/',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+            }
+        
+            $http(req).then(function (response) {
 
-        $scope.Questions = $rootScope.question_list;
+                    $scope.Questions = response.data;
+//                  alert(JSON.stringify($rootScope.question_list ));
+            });
+            $scope.$broadcast('scroll.refreshComplete');
+        }
+//        $scope.Questions = $rootScope.question_list; 
         $scope.onClickUpVote=function (x) {
                 x.upvotes++;
         }
         $scope.onClickAnswer=function (x) {
-            $rootScope.question=x;
+            $rootScope.question_passed=x;
             var req = {
             method: 'GET',
-            url: 'http://172.20.18.158/answerslist/'+x.id+'/',
+            url: 'http://172.26.40.219/answerslist/'+x.id+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
@@ -127,27 +134,81 @@
                     $rootScope.answerList=response.data;
                 //    console.log($scope.routedata);
             });
-                $state.go('tab.AnswerView');
+            
+            $state.go('tab.AnswerView');
         }
+
+        $scope.ask_question=function () {
+            userid=9;
+            city="roorkee";
+            var req = {
+            method: 'POST',
+            url: 'http://172.26.40.219/questionpost/'+userid+'/'+$scope.data.question+'/'+city+'/',
+            headers: {
+            'Content-Type': 'application/json'
+                },
+
+            }
+            $http(req).then(function (response) {
+                    
+                    $Scope.response_data=response.data;
+                //    console.log($scope.routedata);
+            });
+            $scope.data.question="";
+            $http(req).then(function (response) {
+                    $scope.userdata=response.data;
+                //    console.log($scope.routedata);
+            });
+            var alertPopup = $ionicPopup.alert({
+                title: 'Done..!!',
+                template: 'Your question has been posted'
+           });
+            $timeout(function() {
+                alertPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
+        
+        }
+
+
         //var DownVotes=0;
         $scope.onClickDownVote=function (x) {
                  x.downvotes++;
             }	
     })
 
-    .controller('AnswerViewCtrl', function($scope,$ionicPopup,$state,$rootScope) {
-
-
+    .controller('AnswerViewCtrl', function($scope,$ionicPopup,$state,$rootScope,$http,$timeout) {
+        $scope.Answers = $rootScope.answerList;
+        $scope.data={}
+        $scope.Questions = $rootScope.question_passed;
+        $scope.currDate = new Date();
         $scope.onClickReturn=function () {
                  $state.go('tab.Answer');
         }
-         $scope.onClickSave=function () {
-                var AnswerText = document.getElementById("TextArea").value;
-                $scope.Ans=AnswerText;
-        }	
-        $scope.Answers = $rootScope.answerList;
-        $scope.Questions = $rootScope.question;
+         $scope.onClickAnswer=function () {
+            
+            var userid=9;
+            var AnswerText = document.getElementById("TextArea").value;
+            var req = {
+                method: 'POST',
+                url: 'http://172.26.40.219/answerpost/'+AnswerText+'/'+$scope.Questions.id+'/'+userid+'/',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+            }
 
+            $http(req).then(function (response) {
+                    $scope.userdata=response.data;
+                //    console.log($scope.routedata);
+            });
+            var alertPopup = $ionicPopup.alert({
+                title: 'Done..!!',
+                template: 'Your answer has been posted'
+           });
+            $timeout(function() {
+                alertPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
+
+        }	
     })
 
     .controller('OneAnsCtrl', function($scope,$rootScope) {
