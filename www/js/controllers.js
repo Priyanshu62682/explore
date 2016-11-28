@@ -92,8 +92,8 @@
       $scope.chat = Chats.get($stateParams.chatId);
     })
 
-    .controller('AnswerCtrl', function($scope, $state, $http,$rootScope) {
-
+    .controller('AnswerCtrl', function($scope, $state, $http,$rootScope,$ionicPopup,$timeout) {
+        $scope.Questions={};
         $scope.data={};
         $scope.go=function(){
             $state.go('tab.AnswerView');
@@ -117,7 +117,21 @@
         }
 //        $scope.Questions = $rootScope.question_list; 
         $scope.onClickUpVote=function (x) {
-                x.upvotes++;
+            x.upvotes++;
+            var userid=9;
+            var req = {
+                method: 'GET',
+                url: 'http://172.26.40.219/questionlike/'+userid+'/'+x.id+'/',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+            }
+    
+            $http(req).then(function (response) {
+
+            //    $scope.Questions = response.data;
+//                  alert(JSON.stringify($rootScope.question_list ));
+             });
         }
         $scope.onClickAnswer=function (x) {
             $rootScope.question_passed=x;
@@ -147,7 +161,6 @@
             headers: {
             'Content-Type': 'application/json'
                 },
-
             }
             $http(req).then(function (response) {
                     
@@ -172,8 +185,22 @@
 
         //var DownVotes=0;
         $scope.onClickDownVote=function (x) {
-                 x.downvotes++;
-            }	
+            x.downvotes++;
+            var userid=9;
+            var req = {
+                method: 'GET',
+                url: 'http://172.26.40.219/questiondislike/'+userid+'/'+x.id+'/',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+            }
+    
+            $http(req).then(function (response) {
+
+            //    $scope.Questions = response.data;
+//                  alert(JSON.stringify($rootScope.question_list ));
+            });
+        }	
     })
 
     .controller('AnswerViewCtrl', function($scope,$ionicPopup,$state,$rootScope,$http,$timeout) {
@@ -209,6 +236,44 @@
             }, 3000);
 
         }	
+
+        $scope.onClickUpVote=function (x) {
+            alert("upvote");
+            x.upvotes++;
+            var userid=9;
+            var req = {
+                method: 'GET',
+                url: 'http://172.26.40.219/answerlike/'+userid+'/'+x.id+'/',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+            }
+    
+            $http(req).then(function (response) {
+
+                $scope.Questions = response.data;
+//                  alert(JSON.stringify($rootScope.question_list ));
+             });
+        }
+
+        $scope.onClickDownVote=function (x) {
+            alert("upvote");
+            x.downvotes++;
+            var userid=9;
+            var req = {
+                method: 'GET',
+                url: 'http://172.26.40.219/answerdislike/'+userid+'/'+x.id+'/',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+            }
+    
+            $http(req).then(function (response) {
+
+                $scope.Questions = response.data;
+//                  alert(JSON.stringify($rootScope.question_list ));
+            });
+        }   
     })
 
     .controller('OneAnsCtrl', function($scope,$rootScope) {
