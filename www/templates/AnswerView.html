@@ -1,68 +1,66 @@
 
 <ion-view view-title="Explore" >
   <ion-content class="padding">
-      <div class="card list"  >
-   	<div class="item item-divider">
-   		   <h2>{{Questions.id}}</h2>
+    <div class="card list"  >
+      <div class="item item-divider">
+      	   <h2>{{Questions.asked_by}}</h2>
             <h4>{{Questions.location}}</h4>
-            <h4>{{currDate}}</h4>
+            <h4>{{Questions.asked_on}}</h4>
             
- 	  </div>
-   
-  	 <div class="item item-text-wrap">
- 	     <p   >{{Questions.q_detail}}</p>
-  	 </div>
-	   <div class="padding">
-	   <textarea id="TextArea" cols="100" rows="4" my-maxlength="10" placeholder="Write your answer here"></textarea>	
-     </div>
-         <div class="item tabs tabs-secondary tabs-icon-left">
-             <a class="tab-item" on-tap = "onClickAnswer(Questions)">
-             <i class="icon ion-thumbsup" ></i>
-                   Answer
-             </a>
-             <a class="tab-item" on-tap = "onClickDraft()" >
-             <i class="icon ion-chatbox"></i>
-                  Save As Draft
-             </a>
-            <a class="tab-item" on-tap = "onClickReturn()">
-            <i class="icon ion-thumbsdown"></i>
-                  Cancel
-            </a>
-        </div>
-  	<div>
-	<p ng-bind="Ans"></p>
-	</div>
-    </div>
-	<div>
+      </div>
+      <div class="item item-text-wrap">
+         <p   >{{Questions.q_detail}}</p>
+      </div>
+      <div class="padding">
+        <textarea id="TextArea" cols="100" rows="4" my-maxlength="10" placeholder="Write your answer here">
+        </textarea>	
+      </div>
+      <div class="item tabs tabs-secondary tabs-icon-left">
+         <a class="tab-item" on-tap = "onClickAnswer(Questions)">
+         <i class="icon ion-thumbsup" ></i>
+               Answer
+         </a>
+         <a class="tab-item" on-tap = "onClickDraft()" >
+         <i class="icon ion-chatbox"></i>
+              Save As Draft
+         </a>
+        <a class="tab-item" on-tap = "onClickReturn()">
+        <i class="icon ion-thumbsdown"></i>
+              Cancel
+        </a>
+      </div>
+    <div>
+  	   <p ng-bind="Ans"></p>
+  	</div>
+  </div>
 	<div class="item item-divider">
    		   <h2 > Other Answers Available</h2>
 	</div>
 
-<ul>    
+  <ul>    
     <li ng-repeat="x in Answers">
-    <div class="card list" >
-   	<div class="item item-divider">
-   		   <h2 >{{x.answered_by }}</h2>
-		   <p >{{x.answered_on}}</p>
- 	  </div>
-   
-  	 <div class="item item-text-wrap">
- 	     <p id="demo"  >{{ x.answer_detail }}</p>
-  	 </div>
-         <div class="item tabs tabs-secondary tabs-icon-left">
-             <a class="tab-item">
-             <i class="icon ion-thumbsup" on-tap = "onClickUpvote(x)"></i>
-                   {{x.upvotes}}
-             </a>
-            <a class="tab-item" on-tap = "onClickDownvote(x)">
-            <i class="icon ion-thumbsdown"></i>
-                  {{x.downvotes}}
-            </a>
+      <div class="card list" >
+       	<div class="item item-divider">
+       		   <h2 >{{x.answered_by }}</h2>
+    		   <p >{{x.answered_on}}</p>
+     	  </div>
+       
+        <div class="item item-text-wrap">
+           <p id="demo"  >{{ x.answer_detail }}</p>
         </div>
-  	
-    </div>
+        <div class="item tabs tabs-secondary tabs-icon-left">
+           <a class="tab-item" on-tap = "onClickUpvote(x)">
+           <i class="icon ion-thumbsup"></i>
+                 {{x.upvotes}}
+           </a>
+          <a class="tab-item" on-tap = "onClickDownvote(x)">
+          <i class="icon ion-thumbsdown"></i>
+                {{x.downvotes}}
+          </a>
+        </div>
+      	
+      </div>
     </li>
-
    </ul>
   </ion-content>
 </ion-view>

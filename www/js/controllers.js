@@ -29,7 +29,7 @@
 		$scope.value = false;
 		var req = {
             method: 'POST',
-            url: 'http://172.26.40.219/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
+            url: 'http://172.26.42.212/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
             headers: {
             'Content-Type': 'application/json'
             },
@@ -41,7 +41,7 @@
         });
 	/*	var req = {
 			method: 'GET',
-			url: 'http://172.26.40.219/feed/'+req+'/',
+			url: 'http://172.26.42.212/feed/'+req+'/',
 			headers:{
 			'Content-Type' : 'application/json'
 			},
@@ -62,7 +62,7 @@
         var user=2;
         var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/feed/8/',
+                url: 'http://172.26.42.212/feed/8/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -102,7 +102,7 @@
         $scope.doRefresh=function(){
             var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/answer_feed/'+userid+'/',
+                url: 'http://172.26.42.212/answer_feed/'+userid+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -121,7 +121,7 @@
             var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/questionlike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.42.212/questionlike/'+userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -137,7 +137,7 @@
             $rootScope.question_passed=x;
             var req = {
             method: 'GET',
-            url: 'http://172.26.40.219/answerslist/'+x.id+'/',
+            url: 'http://172.26.42.212/answerslist/'+x.id+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
@@ -157,7 +157,7 @@
             city="roorkee";
             var req = {
             method: 'POST',
-            url: 'http://172.26.40.219/questionpost/'+userid+'/'+$scope.data.question+'/'+city+'/',
+            url: 'http://172.26.42.212/questionpost/'+userid+'/'+$scope.data.question+'/'+city+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
@@ -189,7 +189,7 @@
             var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/questiondislike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.42.212/questiondislike/'+userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -217,7 +217,7 @@
             var AnswerText = document.getElementById("TextArea").value;
             var req = {
                 method: 'POST',
-                url: 'http://172.26.40.219/answerpost/'+AnswerText+'/'+$scope.Questions.id+'/'+userid+'/',
+                url: 'http://172.26.42.212/answerpost/'+AnswerText+'/'+$scope.Questions.id+'/'+userid+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -237,13 +237,12 @@
 
         }	
 
-        $scope.onClickUpVote=function (x) {
-            alert("upvote");
+        $scope.onClickUpvote=function (x) {
             x.upvotes++;
             var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/answerlike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.42.212/answerlike/'+userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -251,18 +250,17 @@
     
             $http(req).then(function (response) {
 
-                $scope.Questions = response.data;
+        //        $scope.Questions = response.data;
 //                  alert(JSON.stringify($rootScope.question_list ));
              });
         }
 
-        $scope.onClickDownVote=function (x) {
-            alert("upvote");
+        $scope.onClickDownvote=function (x) {
             x.downvotes++;
             var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/answerdislike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.42.212/answerdislike/'+userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -270,7 +268,7 @@
     
             $http(req).then(function (response) {
 
-                $scope.Questions = response.data;
+        //        $scope.Questions = response.data;
 //                  alert(JSON.stringify($rootScope.question_list ));
             });
         }   
