@@ -20,7 +20,7 @@
 		
 	})
 
-    .controller('DashCtrl', function($scope,$state,$http) {
+    .controller('DashCtrl', function($scope,$state,$http,$ionicPopup,$timeout) {
     	$scope.data={};
         $scope.value = true;
         $scope.votes = 0;
@@ -37,16 +37,12 @@
 		
 		$http(req).then(function (response) {
                 $scope.userdata=response.data;
-            //    console.log($scope.routedata);
+                alert($scope.userdata.name);
         });
-	/*	var req = {
-			method: 'GET',
-			url: 'http://172.26.42.212/feed/'+req+'/',
-			headers:{
-			'Content-Type' : 'application/json'
-			},
-		}*/
 	}
+	    $scope.goto_settings_feed=function () {
+            $state.go('tab.settings_feed');
+        }
         $scope.upVote = function(s){
             s.upvotes++;
         }
@@ -87,6 +83,49 @@
         Chats.remove(chat);
       };
     })
+
+    .controller('settingsCtrl', function($scope,$http,$ionicPopup,$timeout) {
+        var fetchurl;
+        userid=9;
+        $scope.data={};
+        $scope.change=function(){
+            alert("calling");
+        	if($scope.data.expertcity==""){
+                fetchurl='http://172.26.42.212/addcity/'+userid+'/null/'+$scope.data.interestcity+'/';
+            }
+            else if($scope.data.interestcity==""){
+                fetchurl='http://172.26.42.212/addcity/'+userid+'/'+$scope.data.expertcity+'/null/';
+            }
+            else
+                fetchurl='http://172.26.42.212/addcity/'+userid+'/'+$scope.data.expertcity+'/'+$scope.data.interestcity+'/';
+
+            var req = {
+                method: 'POST',
+                url: fetchurl,
+                headers: {
+                'Content-Type': 'application/json'
+                    },
+
+            }
+            $http(req).then(function (response) {
+                    
+                    $Scope.response_data=response.data;
+                //    console.log($scope.routedata);
+            });	
+            $scope.data.expertcity="";
+            $scope.data.interestcity="";
+            var alertPopup = $ionicPopup.alert({
+                title: 'Done..!!',
+                template: 'Your settings has been updated'
+            });
+            $timeout(function() {
+                alertPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
+	    }
+
+    })
+
+
 
     .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
       $scope.chat = Chats.get($stateParams.chatId);
@@ -133,6 +172,9 @@
 //                  alert(JSON.stringify($rootScope.question_list ));
              });
         }
+	    $scope.goto_settings_ans=function () {
+            $state.go('tab.settings_ans');
+        }
         $scope.onClickAnswer=function (x) {
             $rootScope.question_passed=x;
             var req = {
@@ -141,7 +183,6 @@
             headers: {
             'Content-Type': 'application/json'
                 },
-
             }
             $http(req).then(function (response) {
             		
@@ -230,10 +271,22 @@
             var alertPopup = $ionicPopup.alert({
                 title: 'Done..!!',
                 template: 'Your answer has been posted'
-           });
+            });
             $timeout(function() {
                 alertPopup.close(); //close the popup after 3 seconds for some reason
             }, 3000);
+            var requested = {
+            method: 'GET',
+            url: 'http://172.26.42.212/answerslist/'+$scope.Questions.id+'/',
+            headers: {
+            'Content-Type': 'application/json'
+                },
+            }
+            $http(requested).then(function (response) {
+                    
+                    $scope.Answers=response.data;
+                //    console.log($scope.routedata);
+            });
 
         }	
 
