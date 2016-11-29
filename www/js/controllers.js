@@ -20,7 +20,7 @@
 		
 	})
 
-    .controller('DashCtrl', function($scope,$state,$http) {
+    .controller('DashCtrl', function($scope,$state,$http,$cordovaSQLite) {
     	$scope.data={};
         $scope.value = true;
         $scope.votes = 0;
@@ -37,22 +37,22 @@
 		
 		$http(req).then(function (response) {
                 $scope.userdata=response.data;
-            //    console.log($scope.routedata);
+		alert(JSON.stringify($scope.userdata.id));
+            try{
+           db.transaction(function(tx) {
+    tx.executeSql("INSERT INTO user_table (name, usr_id) VALUES (?,?)", [$scope.userdata.name, $scope.userdata.id], function(tx, res) {alert("this is"+JSON.stringify(res)) });	
+    tx.executeSql("select usr_id,name from user_table where id=1;", [], function(tx, res) { alert(res.rows.item(0).usr_id);   }   );
+	});
+	}  catch (error){
+		alert(error);
+	}
+
+
+
         });
-	alert($scope.data.usercity );
-        var firstname = $scope.data.username;
-        var lastname =  $scope.data.usercity;
-
-	var query = "INSERT INTO people (firstname,lastname) VALUES (?,?)";
-        $cordovaSQLite.execute(db, query, [firstname, lastname]).then(function(res) {
-            console.log("INSERT ID -> " + res.insertId);
-		alert("INSERT ID -> " + res.insertId);
-        }, function (err) {
-            console.error(err);
-            alert("err");
-        });
-
-
+	
+	
+	
 	}
 	$scope.goto_settings_feed=function () {
                 $state.go('tab.settings_feed');
@@ -109,10 +109,24 @@
 
             }
             $http(req).then(function (response) {
-                    
+                    alert("okk");
                     $Scope.response_data=response.data;
-                //    console.log($scope.routedata);
+	try{
+           db.transaction(function(tx) {
+    tx.executeSql("INSERT INTO city_table (interest_city, expert_city) VALUES (?,?)", [data.interestcity, data.usercity],function(tx,res){alert(JSON.stringify(res))});	
+    tx.executeSql("select usr_id,name from user_table where id=1;", [], function(tx,res) { alert(JSON.stringify(res))});
+	   });
+	}  
+        catch (error){
+		alert(error);
+         }	                
+
+
             });	
+
+		
+
+
 	}
 
     })

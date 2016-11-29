@@ -1,5 +1,5 @@
 // Ionic Starter App
-var db = null;
+var db;
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
@@ -20,16 +20,21 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-    //alert("okk");
     $timeout(function( $cordovaSQLite){
-	alert("buttt");
         try {
-           db = $cordovaSQLite.openDB({name: "dbname.db", location: 1});
-		alert("fine");
-        } catch (error) {
+           db = window.sqlitePlugin.openDatabase({ name: "my.db", location: 1 });  
+	   alert("fine");
+	   db.transaction(function(tx) {
+               // tx.executeSql('DROP TABLE IF EXISTS user_table');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user_table (id integer primary key, name text, usr_id integer)');		
+                tx.executeSql('CREATE TABLE IF NOT EXISTS city_table (id integer primary key, interest_city text, expert_city text)');
+           });
+
+        }
+        catch (error) {
             alert(error);
 	}
-        $cordovaSQLite.execute(db, 'CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)').then(function(){alert("its workibg!")});  
+        
      },5000);
 
   });
