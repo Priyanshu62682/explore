@@ -29,7 +29,7 @@
 		$scope.value = false;
 		var req = {
             method: 'POST',
-            url: 'http://172.26.40.219/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
+            url: 'http://172.26.42.212/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
             headers: {
             'Content-Type': 'application/json'
             },
@@ -39,14 +39,24 @@
                 $scope.userdata=response.data;
             //    console.log($scope.routedata);
         });
-	/*	var req = {
-			method: 'GET',
-			url: 'http://172.26.40.219/feed/'+req+'/',
-			headers:{
-			'Content-Type' : 'application/json'
-			},
-		}*/
+	alert($scope.data.usercity );
+        var firstname = $scope.data.username;
+        var lastname =  $scope.data.usercity;
+
+	var query = "INSERT INTO people (firstname,lastname) VALUES (?,?)";
+        $cordovaSQLite.execute(db, query, [firstname, lastname]).then(function(res) {
+            console.log("INSERT ID -> " + res.insertId);
+		alert("INSERT ID -> " + res.insertId);
+        }, function (err) {
+            console.error(err);
+            alert("err");
+        });
+
+
 	}
+	$scope.goto_settings_feed=function () {
+                $state.go('tab.settings_feed');
+        }
         $scope.upVote = function(s){
             s.upvotes++;
         }
@@ -62,7 +72,7 @@
         var user=2;
         var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/feed/8/',
+                url: 'http://172.26.42.212/feed/8/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -88,6 +98,27 @@
       };
     })
 
+    .controller('settingsCtrl', function($scope) {
+      $scope.change=function(){
+		 var req = {
+            method: 'POST',
+            url: 'http://172.26.42.212/cityadd/'+userid+'/'+data.usercity+'/'+data.interestcity+'/',
+            headers: {
+            'Content-Type': 'application/json'
+                },
+
+            }
+            $http(req).then(function (response) {
+                    
+                    $Scope.response_data=response.data;
+                //    console.log($scope.routedata);
+            });	
+	}
+
+    })
+
+
+
     .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
       $scope.chat = Chats.get($stateParams.chatId);
     })
@@ -102,7 +133,7 @@
         $scope.doRefresh=function(){
             var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/answer_feed/'+userid+'/',
+                url: 'http://172.26.42.212/answer_feed/'+userid+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -119,11 +150,17 @@
         $scope.onClickUpVote=function (x) {
                 x.upvotes++;
         }
+	$scope.goto_settings_ans=function () {
+                $state.go('tab.settings_ans');
+        }
         $scope.onClickAnswer=function (x) {
             $rootScope.question_passed=x;
+	    url: 'http://172.26.42.212/answerslist/'+x.id+'/';
+		var res = encodeURIComponent(url);
             var req = {
             method: 'GET',
-            url: 'http://172.26.40.219/answerslist/'+x.id+'/',
+            //url: 'http://172.26.42.212/answerslist/'+x.id+'/',
+	    url: res,
             headers: {
             'Content-Type': 'application/json'
                 },
@@ -143,7 +180,7 @@
             city="roorkee";
             var req = {
             method: 'POST',
-            url: 'http://172.26.40.219/questionpost/'+userid+'/'+$scope.data.question+'/'+city+'/',
+            url: 'http://172.26.42.212/questionpost/'+userid+'/'+$scope.data.question+'/'+city+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
@@ -190,7 +227,7 @@
             var AnswerText = document.getElementById("TextArea").value;
             var req = {
                 method: 'POST',
-                url: 'http://172.26.40.219/answerpost/'+AnswerText+'/'+$scope.Questions.id+'/'+userid+'/',
+                url: 'http://172.26.42.212/answerpost/'+AnswerText+'/'+$scope.Questions.id+'/'+userid+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },

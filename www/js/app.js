@@ -1,13 +1,13 @@
 // Ionic Starter App
-
+var db = null;
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $cordovaSQLite,$timeout) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,7 +20,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    //alert("okk");
+    $timeout(function( $cordovaSQLite){
+	alert("buttt");
+        try {
+           db = $cordovaSQLite.openDB({name: "dbname.db", location: 1});
+		alert("fine");
+        } catch (error) {
+            alert(error);
+	}
+        $cordovaSQLite.execute(db, 'CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)').then(function(){alert("its workibg!")});  
+     },5000);
+
   });
+
+
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -78,6 +92,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         'tab-chats': {
           templateUrl: 'templates/chat-detail.html',
           controller: 'ChatDetailCtrl'
+        }
+      }
+    })
+    .state('tab.settings_ans', {
+      url: '/settings',
+      views: {
+        'tab-Answer': {
+          templateUrl: 'templates/settings.html',
+          controller: 'settingsCtrl'
+        }
+      }
+    })
+
+.state('tab.settings_feed', {
+      url: '/settings',
+      views: {
+        'tab-dash': {
+          templateUrl: 'templates/settings.html',
+          controller: 'settingsCtrl'
         }
       }
     })
