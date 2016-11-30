@@ -5,7 +5,7 @@
     on-refresh="doRefresh()">
   </ion-refresher>
    <div class="list" ng-repeat="q in Questions">
-      <a class="item" ng-click="Answerpage()">
+      <a class="item" on-tap="Answerpage(q)">
       <h2>{{q.asked_by}}</h2>
       <h4>Your question has been answered</h4>
       <p>{{q.q_detail}}</p>

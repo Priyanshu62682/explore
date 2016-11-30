@@ -104,7 +104,7 @@
         }
         $scope.gotoans = function(s){
             $rootScope.usname = s.q_detail;
-            $state.go('tab.OneAns');
+            $state.go('tab.view-answer-feed');
         }
 
         //http request
@@ -394,8 +394,50 @@
 
 
     })
+ .controller('view-answerCtrl', function($scope,$rootScope) {
+	$scope.Answers = $rootScope.answerList;
+	 $scope.onClickUpvote=function (x) {
+            alert("upvote");
+            x.upvotes++;
+            var req = {
+                method: 'GET',
+                url: 'http://172.26.42.212/answerlike/'+userid+'/'+x.id+'/',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+            }
+    
+            $http(req).then(function (response) {
 
-    .controller('AccountCtrl', function($scope,$http,$state) {
+                $scope.Questions = response.data;
+//                  alert(JSON.stringify($rootScope.question_list ));
+             }, function(response){
+                alert("Please connect to internet");
+            });
+        }
+
+        $scope.onClickDownvote=function (x) {
+            alert("upvote");
+            x.downvotes++;
+            var req = {
+                method: 'GET',
+                url: 'http://172.26.42.212/answerdislike/'+userid+'/'+x.id+'/',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+            }
+    
+            $http(req).then(function (response) {
+
+                $scope.Questions = response.data;
+//                  alert(JSON.stringify($rootScope.question_list ));
+            }, function(response){
+                alert("Please connect to internet");
+            });
+        }   
+    })
+
+    .controller('AccountCtrl', function($scope,$http,$state,$rootScope) {
         var userid=8;
     //  var userid=$rootScope.super_user;
 
@@ -418,20 +460,21 @@
         }
         $scope.Answerpage=function (q) {
             $rootScope.question_passed=q;
+		//alert("q");
             var req = {
             method: 'GET',
-            url: 'http://172.26.42.212/answerslist/'+q.id+'/',
+            url: 'http://172.26.42.212/answerslist/8/',
             headers: {
             'Content-Type': 'application/json'
                 },
             }
             $http(req).then(function (response) {
                     $rootScope.answerList=response.data;
-                //    console.log($scope.routedata);
+                    alert(JSON.stringify(response.data) );
             }, function(response){
                 alert("Please connect to internet");
             });
-            $state.go('tab.AnswerView');
+            $state.go('tab.view-answer-account');
         }
 
     });

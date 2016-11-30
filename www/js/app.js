@@ -152,6 +152,25 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
         }
       }
     })
+.state('tab.view-answer-feed', {
+      url:'/view-answer',
+      views: {
+        'tab-dash': {
+          templateUrl: 'templates/view-answer.html',
+          controller: 'view-answerCtrl'
+        }
+      }
+    })
+.state('tab.view-answer-account', {
+      url:'/view-answer',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/view-answer.html',
+          controller: 'view-answerCtrl'
+        }
+      }
+    })
+
 
   .state('tab.account', {
     url: '/account',

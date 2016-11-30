@@ -1,0 +1,36 @@
+
+<ion-view view-title="Explore" class="background">
+  <ion-content class="padding" > 
+    
+	<div class="item item-divider">
+   		   <h2 > Answers Available</h2>
+	</div>
+
+  <ul>    
+    <li ng-repeat="x in Answers">
+      <div class="card list" >
+       	<div class="item item-divider">
+       		   <h2 >{{x.answered_by }}</h2>
+    		   <p >{{x.answered_on}}</p>
+     	  </div>
+       
+        <div class="item item-text-wrap">
+           <p id="demo"  >{{ x.answer_detail }}</p>
+        </div>
+        <div class="item tabs tabs-secondary tabs-icon-left">
+           <a class="tab-item" on-tap = "onClickUpvote(x)">
+           <i class="icon ion-thumbsup"></i>
+                 {{x.upvotes}}
+           </a>
+          <a class="tab-item" on-tap = "onClickDownvote(x)">
+          <i class="icon ion-thumbsdown"></i>
+                {{x.downvotes}}
+          </a>
+        </div>
+      	
+      </div>
+    </li>
+   </ul>
+  </ion-content>
+</ion-view>
+
