@@ -104,6 +104,7 @@
         }
         $scope.gotoans = function(s){
             $rootScope.usname = s.q_detail;
+		 $rootScope.question_passed=s;
             $state.go('tab.view-answer-feed');
         }
 
@@ -117,6 +118,7 @@
         }
         $http(req).then(function (response) {
 				$scope.self = response.data;
+				
 		}, function(response){
             alert("No data found");
         });
@@ -396,6 +398,8 @@
     })
  .controller('view-answerCtrl', function($scope,$rootScope) {
 	$scope.Answers = $rootScope.answerList;
+        $scope.question= $rootScope.question_passed;
+	alert($scope.question.q_details);
 	 $scope.onClickUpvote=function (x) {
             alert("upvote");
             x.upvotes++;
