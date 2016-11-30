@@ -1,16 +1,15 @@
-<ion-view view-title="Explore">
+<ion-view view-title="Explore" class="background">
   <ion-content>
-   <div class="list">
-            <a class="item item-avatar" href="#">
-            <img src="img/me.jpg">
-            <h2>Question Answered</h2>
-            <p>Vicky answered a question</p>
-            </a>
-            <a class="item item-avatar" href="#">
-            <img src="img/me.jpg">
-            <h2>Question Answered</h2>
-            <p>Vicky answered a question</p>
-            </a>
-        </div>
+   <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
+   <div class="list" ng-repeat="q in Questions">
+      <a class="item" ng-click="Answerpage()">
+      <h2>{{q.asked_by}}</h2>
+      <h4>Your question has been answered</h4>
+      <p>{{q.q_detail}}</p>
+      </a>
+    </div>
   </ion-content>
 </ion-view>

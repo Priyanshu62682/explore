@@ -1,4 +1,4 @@
-<ion-view view-title="Explore" >
+<ion-view view-title="Explore" class="background">
   <ion-content class="padding">
 
   <div class="background"  ng-show = "value">
@@ -35,11 +35,12 @@
     </center>
         </div>
 </div>
-	<div class="rndm" ng-hide="value">
+	<div class="rndm" ng-hide="value" class="background">
    <div class="list card" ng-repeat="s in self" >
     <div ng-click="gotoans(s)">
-  <div class="item item-avatar" class="mystyle">
-    <h2>{{s.asked_by}}</h2>
+  <div class="item" class="mystyle">
+    <h2>Priyanshu</h2>
+    
     <p>{{s.asked_on}}</p>
   </div>
     <div class="item item-body">

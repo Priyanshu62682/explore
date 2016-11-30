@@ -1,15 +1,15 @@
 
-<ion-view view-title="Explore" >
-  <ion-content class="padding">
+<ion-view view-title="Explore" class="background">
+  <ion-content class="padding" > 
     <div class="card list"  >
       <div class="item item-divider">
-      	   <h2>{{Questions.asked_by}}</h2>
+      	    <h2>{{Questions.asked_by}}</h2>
             <h4>{{Questions.location}}</h4>
             <h4>{{Questions.asked_on}}</h4>
             
       </div>
       <div class="item item-text-wrap">
-         <p   >{{Questions.q_detail}}</p>
+        <p   >{{Questions.q_detail}}</p>
       </div>
       <div class="padding">
         <textarea id="TextArea" cols="100" rows="4" my-maxlength="10" placeholder="Write your answer here">
