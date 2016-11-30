@@ -1,80 +1,70 @@
 <ion-view view-title="Explore" class="background">
   <ion-content class="padding">
 
-  <div class="background"  ng-show = "value">
+  <div ng-show = "value">
     <center><p style="font-size:20px">City Guide Application</p></center>
-<div class="list">
-   <p> <br>Name </p> 
-   <label class="item item-input">
-   <input type="text" placeholder="Enter Name" ng-model="data.username">
-   </label>
-<p> <br>Age </p> 
-   <label class="item item-input">
-   <input type="number" placeholder="Age">
-   </label>
-	<p><br> E-mail </p> 
-   <label class="item item-input">
-   <input type="text" placeholder="E-mail">
-   </label>
-<p> <br>Gender </p> 
-   <label class="item item-input">
-   <input type="text" placeholder="Gender">
-   </label>
-<p> <br>Area of Experties </p>
-   <label class="item item-input">
-   <input type="text" placeholder="Area of Experties" ng-model="data.usercity">
-   </label>
-<p> <br>Areas of Interest </p> 
-   
+    <div class="list">
+      <p> <br>Name </p> 
+      <label class="item item-input">
+        <input type="text" placeholder="Enter Name" ng-model="data.username">
+      </label>
+      <p> <br>Area of Experties </p>
+      <label class="item item-input">
+        <input type="text" placeholder="Area of Experties" ng-model="data.usercity">
+      </label>
+      <p> <br>Areas of Interest </p> 
+      <label class="item item-input">
+        <input type="text" placeholder="Area of Interest" ng-model="data.expertcity">
+      </label>
     </div>
     <div>
-    <center>
-    <button class="button button-balanced" ng-click = "reguser()">
+      <center>
+        <button class="button button-balanced" ng-click = "reguser()">
         Register
-    </button>
-    </center>
-        </div>
-</div>
-	<div class="rndm" ng-hide="value" class="background">
-   <div class="list card" ng-repeat="s in self" >
-    <div ng-click="gotoans(s)">
-  <div class="item" class="mystyle">
-    <h2>Priyanshu</h2>
-    
-    <p>{{s.asked_on}}</p>
+        </button>
+      </center>
+    </div>
   </div>
-    <div class="item item-body">
-      <p>
+  <div class="rndm" ng-hide="value">
+    <div class="list card" ng-repeat="s in self" >
+      <div ng-click="gotoans(s)">
+        <div class="item" class="mystyle">
+          <h2>{{s.asked_by}}</h2>
+
+          <p>{{s.asked_on}}</p>
+        </div>
+        <div class="item item-body">
+        <p>
         {{s.q_detail}}
-      </p>
-      <!--p>
+        </p>
+        <!--p>
         <a href="#" class="subdued">1 Like</a>
         <a href="#" class="subdued">5 Comments</a>
-      </p-->
-    </div>
-    </div>
-    <div class="item tabs tabs-secondary tabs-icon-left">
-      <a class="tab-item" class="iconstyle" ng-click="upVote(s)" href="#">
-        <i class="icon ion-thumbsup" ></i>
-        Upvotes {{s.upvotes}}
-      </a>
-      <a class="tab-item" class="iconstyle" ng-click="downVote(s)"  href="#">
-        <i class="icon ion-thumbsdown"></i>
-        Downvotes {{s.downvotes}}
-      </a>
+        </p-->
+        </div>
+      </div>
+      <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" class="iconstyle" ng-click="upVote(s)" href="#">
+          <i class="icon ion-thumbsup" ></i>
+          Upvotes {{s.upvotes}}
+        </a>
+        <a class="tab-item" class="iconstyle" ng-click="downVote(s)"  href="#">
+          <i class="icon ion-thumbsdown"></i>
+          Downvotes {{s.downvotes}}
+        </a>
+      </div>
     </div>
   </div>
-</div>
   </ion-content>
   <ion-footer-bar align-title="left" class="bar-balanced" ng-hide="value">
-<button class="button button-small button-balanced"  ng-click="goto_settings_feed()" >
-      settings
-    </button>
-	<label class="item-input-wrapper">
-      <input type="text" placeholder="Ask Question" style="width:100%;height:100%">
-    </label>
-    <button class="button button-small button-balanced">
-      Ask
-    </button>
-</ion-footer-bar>
+  <button class="button button-small button-balanced"  ng-click="goto_settings_feed()" >
+  settings
+  </button>
+  <label class="item-input-wrapper">
+  <input type="text" ng-model="data.question" placeholder="Ask Question" style="width:100%;height:100%">
+  </label>
+  <button class="button button-small button-balanced" ng-click="ask_question()">
+  Ask
+  </button>
+  </ion-footer-bar>
 </ion-view>

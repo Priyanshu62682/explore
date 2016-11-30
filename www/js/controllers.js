@@ -22,25 +22,79 @@
     .controller('DashCtrl', function($scope,$state,$http,$ionicPopup,$timeout,$rootScope) {
     	$scope.data={};
         $rootScope.value = true;
+//        var userid=$rootScope.super_user;
+        var userid=8;       //change here userid
+        var city="Delhi";   //change city here
+//        var city=$rootScope.super_city;
         $scope.votes = 0;
+	    //alert("damn");
         $scope.downvotes = 0;
         $scope.reguser = function(){
-		$rootScope.value = false;
-		var req = {
+            if($scope.data.usercity==""||$scope.data.expertcity==""||$scope.data.username==""){
+                alert("Invalid Data");
+                return;
+            }
+    		$rootScope.value = false;
+    		var req = {
+                method: 'POST',
+                url: 'http://172.26.42.212/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+            }
+    		
+    		$http(req).then(function (response) {
+                $scope.userdata=response.data;
+                try{
+                    db.transaction(function(tx) {
+                        tx.executeSql("INSERT INTO user_table (name, usr_id) VALUES (?,?)", [$scope.userdata.name, $scope.userdata.id], function(tx, res) {});	
+                        tx.executeSql("select usr_id,name from user_table where id=1;", [], function(tx, res) {   }   );
+                    });
+                }  catch (error){
+                alert(error);
+                }
+                var alertPopup = $ionicPopup.alert({
+                title: ' ',
+                template: 'Successfully Registered'
+           });
+            $timeout(function() {
+                alertPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
+
+            }, function(response){
+                alert("Please connect to internet");
+            });
+    	
+    	
+    	
+    	}
+        $scope.ask_question=function () {
+            var req = {
             method: 'POST',
-            url: 'http://172.20.18.168/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
+            url: 'http://172.26.42.212/questionpost/'+userid+'/'+$scope.data.question+'/'+city+'/',
             headers: {
             'Content-Type': 'application/json'
-            },
+                },
+            }
+            $http(req).then(function (response) {
+                    
+                    $Scope.response_data=response.data;
+                //    console.log($scope.routedata);
+            }, function(response){
+                alert("Please connect to internet");
+            });
+            $scope.data.question="";
+            var alertPopup = $ionicPopup.alert({
+                title: 'Done..!!',
+                template: 'Your question has been posted'
+           });
+            $timeout(function() {
+                alertPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
+        
         }
-		
-		$http(req).then(function (response) {
-                $scope.userdata=response.data;
-                alert($scope.userdata.name);
-        });
-	}
 	    $scope.goto_settings_feed=function () {
-            $state.go('tab.settings_feed');
+                $state.go('tab.settings_feed');
         }
         $scope.upVote = function(s){
             s.upvotes++;
@@ -54,21 +108,21 @@
         }
 
         //http request
-        var user=2;
         var req = {
                 method: 'GET',
-                url: 'http://172.20.18.168/feed/8/',
+                url: 'http://172.26.42.212/feed/'+userid+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
-
-            }
-            $http(req).then(function (response) {
-					$scope.self = response.data;
-			});
+        }
+        $http(req).then(function (response) {
+				$scope.self = response.data;
+		}, function(response){
+            alert("No data found");
+        });
 
     })
-    .controller('ChatsCtrl', function($scope, Chats) {
+    .controller('ChatsCtrl', function($scope, Chats,$rootScope) {
       // With the new view caching in Ionic, Controllers are only called
       // when they are recreated or on app start, instead of every page change.
       // To listen for when this page is active (for example, to refresh data),
@@ -85,18 +139,18 @@
 
     .controller('settingsCtrl', function($scope,$http,$ionicPopup,$timeout) {
         var fetchurl;
-        userid=9;
+        userid=8;
         $scope.data={};
         $scope.change=function(){
             alert("calling");
         	if($scope.data.expertcity==""){
-                fetchurl='http://172.20.18.168/addcity/'+userid+'/null/'+$scope.data.interestcity+'/';
+                fetchurl='http://172.26.42.212/addcity/'+userid+'/null/'+$scope.data.interestcity+'/';
             }
             else if($scope.data.interestcity==""){
-                fetchurl='http://172.20.18.168/addcity/'+userid+'/'+$scope.data.expertcity+'/null/';
+                fetchurl='http://172.26.42.212/addcity/'+userid+'/'+$scope.data.expertcity+'/null/';
             }
             else
-                fetchurl='http://172.20.18.168/addcity/'+userid+'/'+$scope.data.expertcity+'/'+$scope.data.interestcity+'/';
+                fetchurl='http://172.26.42.212/addcity/'+userid+'/'+$scope.data.expertcity+'/'+$scope.data.interestcity+'/';
 
             var req = {
                 method: 'POST',
@@ -107,26 +161,29 @@
 
             }
             $http(req).then(function (response) {
-                    
-                    $Scope.response_data=response.data;
-                //    console.log($scope.routedata);
+                   // alert("okk");
+                $Scope.response_data=response.data;
+                try{
+                    db.transaction(function(tx) {
+                        tx.executeSql("INSERT INTO city_table (interest_city, expert_city) VALUES (?,?)", [data.interestcity, data.usercity],function(tx,res){alert(JSON.stringify(res))});	
+                        tx.executeSql("select usr_id,name from user_table where id=1;", [], function(tx,res) { alert(JSON.stringify(res))});
+                    });
+                }  
+                catch (error){
+                alert(error);
+                }	                
+
+
+            }, function(response){
+                alert("Please connect to internet");
             });	
-            $scope.data.expertcity="";
-            $scope.data.interestcity="";
-            var alertPopup = $ionicPopup.alert({
-                title: 'Done..!!',
-                template: 'Your settings has been updated'
-            });
-            $timeout(function() {
-                alertPopup.close(); //close the popup after 3 seconds for some reason
-            }, 3000);
 	    }
 
     })
 
 
 
-    .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+    .controller('ChatDetailCtrl', function($scope, $stateParams, Chats,$rootScope) {
       $scope.chat = Chats.get($stateParams.chatId);
     })
 
@@ -137,10 +194,12 @@
             $state.go('tab.AnswerView');
         }
         var userid=8;
+        var city="Delhi";
+//        var userid=$rootScope.super_user;     //change user here
         $scope.doRefresh=function(){
             var req = {
                 method: 'GET',
-                url: 'http://172.20.18.168/answer_feed/'+userid+'/',
+                url: 'http://172.26.42.212/answer_feed/'+userid+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -148,18 +207,17 @@
         
             $http(req).then(function (response) {
 
-                    $scope.Questions = response.data;
-//                  alert(JSON.stringify($rootScope.question_list ));
+                $scope.Questions = response.data;
+            }, function(response){
+                alert("No data found");
             });
             $scope.$broadcast('scroll.refreshComplete');
         }
-//        $scope.Questions = $rootScope.question_list; 
         $scope.onClickUpVote=function (x) {
             x.upvotes++;
-            var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.20.18.168/questionlike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.42.212/questionlike/'+userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -167,37 +225,38 @@
     
             $http(req).then(function (response) {
 
-            //    $scope.Questions = response.data;
-//                  alert(JSON.stringify($rootScope.question_list ));
-             });
+             }, function(response){
+                alert("Please connect to internet");
+            });
         }
-	    $scope.goto_settings_ans=function () {
-            $state.go('tab.settings_ans');
+	$scope.goto_settings_ans=function () {
+                $state.go('tab.settings_ans');
         }
         $scope.onClickAnswer=function (x) {
             $rootScope.question_passed=x;
             var req = {
             method: 'GET',
-            url: 'http://172.20.18.168/answerslist/'+x.id+'/',
+            url: 'http://172.26.42.212/answerslist/'+x.id+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
+
             }
             $http(req).then(function (response) {
             		
                     $rootScope.answerList=response.data;
                 //    console.log($scope.routedata);
+            }, function(response){
+                alert("Please connect to internet");
             });
             
             $state.go('tab.AnswerView');
         }
 
         $scope.ask_question=function () {
-            userid=9;
-            city="roorkee";
             var req = {
             method: 'POST',
-            url: 'http://172.20.18.168/questionpost/'+userid+'/'+$scope.data.question+'/'+city+'/',
+            url: 'http://172.26.42.212/questionpost/'+userid+'/'+$scope.data.question+'/'+city+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
@@ -206,30 +265,27 @@
                     
                     $Scope.response_data=response.data;
                 //    console.log($scope.routedata);
+            }, function(response){
+                alert("Please connect to internet");
             });
             $scope.data.question="";
-            $http(req).then(function (response) {
-                    $scope.userdata=response.data;
-                //    console.log($scope.routedata);
-            });
             var alertPopup = $ionicPopup.alert({
-                title: 'Done..!!',
+                title: ' ',
                 template: 'Your question has been posted'
            });
             $timeout(function() {
                 alertPopup.close(); //close the popup after 3 seconds for some reason
             }, 3000);
-        
         }
 
 
         //var DownVotes=0;
         $scope.onClickDownVote=function (x) {
             x.downvotes++;
-            var userid=9;
+            var userid=8;
             var req = {
                 method: 'GET',
-                url: 'http://172.20.18.168/questiondislike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.42.212/questiondislike/'+userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -237,27 +293,27 @@
     
             $http(req).then(function (response) {
 
-            //    $scope.Questions = response.data;
-//                  alert(JSON.stringify($rootScope.question_list ));
+            }, function(response){
+                alert("Please connect to internet");
             });
         }	
     })
 
     .controller('AnswerViewCtrl', function($scope,$ionicPopup,$state,$rootScope,$http,$timeout) {
         $scope.Answers = $rootScope.answerList;
-        $scope.data={}
+        $scope.data={};
         $scope.Questions = $rootScope.question_passed;
-        $scope.currDate = new Date();
+        var userid=8;
+    //  var userid=$rootScope.super_user;
+    //  var city=$rootScope.super_city;
         $scope.onClickReturn=function () {
                  $state.go('tab.Answer');
         }
          $scope.onClickAnswer=function () {
-            
-            var userid=9;
             var AnswerText = document.getElementById("TextArea").value;
             var req = {
                 method: 'POST',
-                url: 'http://172.20.18.168/answerpost/'+AnswerText+'/'+$scope.Questions.id+'/'+userid+'/',
+                url: 'http://172.26.42.212/answerpost/'+AnswerText+'/'+$scope.Questions.id+'/'+userid+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -266,17 +322,20 @@
             $http(req).then(function (response) {
                     $scope.userdata=response.data;
                 //    console.log($scope.routedata);
+            }, function(response){
+                alert("Please connect to internet");
             });
             var alertPopup = $ionicPopup.alert({
                 title: 'Done..!!',
                 template: 'Your answer has been posted'
-            });
+           });
             $timeout(function() {
                 alertPopup.close(); //close the popup after 3 seconds for some reason
             }, 3000);
+            AnswerText="";
             var requested = {
             method: 'GET',
-            url: 'http://172.20.18.168/answerslist/'+$scope.Questions.id+'/',
+            url: 'http://172.26.42.212/answerslist/'+$scope.Questions.id+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
@@ -285,16 +344,17 @@
                     
                     $scope.Answers=response.data;
                 //    console.log($scope.routedata);
+            }, function(response){
+                alert("Please connect to internet");
             });
-
         }	
 
         $scope.onClickUpvote=function (x) {
+            alert("upvote");
             x.upvotes++;
-            var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.20.18.168/answerlike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.42.212/answerlike/'+userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -302,17 +362,19 @@
     
             $http(req).then(function (response) {
 
-        //        $scope.Questions = response.data;
+                $scope.Questions = response.data;
 //                  alert(JSON.stringify($rootScope.question_list ));
-             });
+             }, function(response){
+                alert("Please connect to internet");
+            });
         }
 
         $scope.onClickDownvote=function (x) {
+            alert("upvote");
             x.downvotes++;
-            var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.20.18.168/answerdislike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.42.212/answerdislike/'+userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -320,8 +382,10 @@
     
             $http(req).then(function (response) {
 
-        //        $scope.Questions = response.data;
+                $scope.Questions = response.data;
 //                  alert(JSON.stringify($rootScope.question_list ));
+            }, function(response){
+                alert("Please connect to internet");
             });
         }   
     })
@@ -332,39 +396,41 @@
     })
 
     .controller('AccountCtrl', function($scope,$http,$state) {
-        var userid=9;
+        var userid=8;
+    //  var userid=$rootScope.super_user;
+
           $scope.doRefresh=function(){
             var req = {
                 method: 'GET',
-                url: 'http://172.20.18.168/notify_ques/'+userid+'/',
+                url: 'http://172.26.42.212/notify_ques/'+userid+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
             }
-        
             $http(req).then(function (response) {
 
                     $scope.Questions = response.data;
 //                  alert(JSON.stringify($rootScope.question_list ));
+            }, function(response){
+                alert("Please connect to internet");
             });
             $scope.$broadcast('scroll.refreshComplete');
         }
         $scope.Answerpage=function (q) {
-            alert("Passing into");
             $rootScope.question_passed=q;
             var req = {
             method: 'GET',
-            url: 'http://172.20.18.168/answerslist/'+q.id+'/',
+            url: 'http://172.26.42.212/answerslist/'+q.id+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
             }
             $http(req).then(function (response) {
-                    
                     $rootScope.answerList=response.data;
                 //    console.log($scope.routedata);
+            }, function(response){
+                alert("Please connect to internet");
             });
-            
             $state.go('tab.AnswerView');
         }
 
