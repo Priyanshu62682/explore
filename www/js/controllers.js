@@ -399,7 +399,7 @@
  .controller('view-answerCtrl', function($scope,$rootScope) {
 	$scope.Answers = $rootScope.answerList;
         $scope.question= $rootScope.question_passed;
-	alert($scope.question.q_details);
+	//alert($scope.question.q_details);
 	 $scope.onClickUpvote=function (x) {
             alert("upvote");
             x.upvotes++;
