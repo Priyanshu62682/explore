@@ -20,16 +20,16 @@
 		
 	})
 
-    .controller('DashCtrl', function($scope,$state,$http,$cordovaSQLite) {
+    .controller('DashCtrl', function($scope,$state,$http,$rootScope) {
     	$scope.data={};
-        $scope.value = true;
         $scope.votes = 0;
+	//alert("damn");
         $scope.downvotes = 0;
         $scope.reguser = function(){
-		$scope.value = false;
+		$rootScope.value = false;
 		var req = {
             method: 'POST',
-            url: 'http://172.26.42.212/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
+            url: 'http://172.18.0.104/register/'+$scope.data.username+'/'+$scope.data.usercity+'/',
             headers: {
             'Content-Type': 'application/json'
             },
@@ -72,7 +72,7 @@
         var user=2;
         var req = {
                 method: 'GET',
-                url: 'http://172.26.42.212/feed/8/',
+                url: 'http://172.18.0.104/feed/8/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -83,7 +83,7 @@
 			});
 
     })
-    .controller('ChatsCtrl', function($scope, Chats) {
+    .controller('ChatsCtrl', function($scope, Chats,$rootScope) {
       // With the new view caching in Ionic, Controllers are only called
       // when they are recreated or on app start, instead of every page change.
       // To listen for when this page is active (for example, to refresh data),
@@ -98,18 +98,18 @@
       };
     })
 
-    .controller('settingsCtrl', function($scope) {
+    .controller('settingsCtrl', function($scope,$rootScope) {
       $scope.change=function(){
 		 var req = {
             method: 'POST',
-            url: 'http://172.26.42.212/cityadd/'+userid+'/'+data.usercity+'/'+data.interestcity+'/',
+            url: 'http://172.18.0.104/cityadd/'+$rootScope.userid+'/'+data.usercity+'/'+data.interestcity+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
 
             }
             $http(req).then(function (response) {
-                    alert("okk");
+                   // alert("okk");
                     $Scope.response_data=response.data;
 	try{
            db.transaction(function(tx) {
@@ -133,7 +133,7 @@
 
 
 
-    .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+    .controller('ChatDetailCtrl', function($scope, $stateParams, Chats,$rootScope) {
       $scope.chat = Chats.get($stateParams.chatId);
     })
 
@@ -147,7 +147,7 @@
         $scope.doRefresh=function(){
             var req = {
                 method: 'GET',
-                url: 'http://172.26.42.212/answer_feed/'+userid+'/',
+                url: 'http://172.18.0.104/answer_feed/'+$rootScope.userid+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -166,7 +166,7 @@
             var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/questionlike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.40.219/questionlike/'+$rootScope.userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -183,11 +183,11 @@
         }
         $scope.onClickAnswer=function (x) {
             $rootScope.question_passed=x;
-	    url: 'http://172.26.42.212/answerslist/'+x.id+'/';
+	    url: 'http://172.18.0.104/answerslist/'+x.id+'/';
 		var res = encodeURIComponent(url);
             var req = {
             method: 'GET',
-            //url: 'http://172.26.42.212/answerslist/'+x.id+'/',
+            //url: 'http://172.18.0.104/answerslist/'+x.id+'/',
 	    url: res,
             headers: {
             'Content-Type': 'application/json'
@@ -208,7 +208,7 @@
             city="roorkee";
             var req = {
             method: 'POST',
-            url: 'http://172.26.42.212/questionpost/'+userid+'/'+$scope.data.question+'/'+city+'/',
+            url: 'http://172.18.0.104/questionpost/'+$rootScope.userid+'/'+$scope.data.question+'/'+city+'/',
             headers: {
             'Content-Type': 'application/json'
                 },
@@ -240,7 +240,7 @@
             var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/questiondislike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.40.219/questiondislike/'+$rootScope.userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -268,7 +268,7 @@
             var AnswerText = document.getElementById("TextArea").value;
             var req = {
                 method: 'POST',
-                url: 'http://172.26.42.212/answerpost/'+AnswerText+'/'+$scope.Questions.id+'/'+userid+'/',
+                url: 'http://172.18.0.104/answerpost/'+AnswerText+'/'+$scope.Questions.id+'/'+$rootScope.userid+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -294,7 +294,7 @@
             var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/answerlike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.40.219/answerlike/'+$rootScope.userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -313,7 +313,7 @@
             var userid=9;
             var req = {
                 method: 'GET',
-                url: 'http://172.26.40.219/answerdislike/'+userid+'/'+x.id+'/',
+                url: 'http://172.26.40.219/answerdislike/'+$rootScope.userid+'/'+x.id+'/',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -332,7 +332,7 @@
 
     })
 
-    .controller('AccountCtrl', function($scope) {
+    .controller('AccountCtrl', function($scope,$rootScope) {
       $scope.settings = {
         enableFriends: true
       };

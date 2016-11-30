@@ -7,7 +7,7 @@ var db;
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform, $cordovaSQLite,$timeout) {
+.run(function($ionicPlatform, $cordovaSQLite,$timeout,$rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -23,11 +23,23 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
     $timeout(function( $cordovaSQLite){
         try {
            db = window.sqlitePlugin.openDatabase({ name: "my.db", location: 1 });  
-	   alert("fine");
+	   //alert("fine");
 	   db.transaction(function(tx) {
                // tx.executeSql('DROP TABLE IF EXISTS user_table');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS user_table (id integer primary key, name text, usr_id integer)');		
                 tx.executeSql('CREATE TABLE IF NOT EXISTS city_table (id integer primary key, interest_city text, expert_city text)');
+
+  	
+		tx.executeSql("select * from user_table;",[], function(tx,res) { /*alert( JSON.stringify(res.rows))*/;
+		if(res.rows.length==0){
+		$rootScope.value = true;}
+		else{
+		$rootScope.value = false;
+		$rootScope.userid=res.rows.item(0).usr_id;
+		}
+		 } );
+				
+		
            });
 
         }
@@ -35,7 +47,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
             alert(error);
 	}
         
-     },5000);
+     },0);
 
   });
 
